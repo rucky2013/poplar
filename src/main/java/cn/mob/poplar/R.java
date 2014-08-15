@@ -11,6 +11,5 @@ public interface R {
 
     String poplar_host = "127.0.0.1";
     String poplar_port = "poplar.port";
-
     String TRUE = "true";
 }
