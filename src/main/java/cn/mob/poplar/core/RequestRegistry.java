@@ -1,5 +1,6 @@
 package cn.mob.poplar.core;
 
+import cn.mob.poplar.util.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -37,14 +38,26 @@ public class RequestRegistry implements Registry,ApplicationContextAware{
         Iterator<String> iterator = map.keySet().iterator();
         while (iterator.hasNext()) {
             String key = iterator.next();
-            System.out.println(key);
             Object obj = map.get(key);
-            String controller_name = obj.getClass().getSimpleName().toLowerCase().replace("controller", "");
+            String pre_uri = obj.getClass().getAnnotation(Controller.class).value();
+            if(StringUtils.isBlank(pre_uri)){
+                pre_uri =  obj.getClass().getSimpleName().toLowerCase().replace("controller", "");
+            }
+            pre_uri = formatURI(pre_uri);
             Method[] methods = obj.getClass().getDeclaredMethods();
             for (Method method : methods) {
-                mapping.put("/" + controller_name + "/" + method.getName(), new CMBean(obj, method));
+                mapping.put(pre_uri + "/" + method.getName(), new CMBean(obj, method));
             }
         }
+    }
+    private String formatURI(String pre_uri){
+        if(!pre_uri.startsWith("/")){
+            pre_uri = "/"+pre_uri;
+        }
+        if(pre_uri.endsWith("/")){
+            pre_uri = StringUtils.substringBefore(pre_uri,"/");
+        }
+        return pre_uri;
     }
 
     @Override
