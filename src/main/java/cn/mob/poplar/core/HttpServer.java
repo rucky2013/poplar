@@ -8,6 +8,9 @@ import org.jboss.netty.channel.*;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 import org.jboss.netty.handler.codec.http.HttpRequestDecoder;
 import org.jboss.netty.handler.codec.http.HttpResponseEncoder;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 import java.net.InetSocketAddress;
 import java.util.Properties;
@@ -24,6 +27,7 @@ public class HttpServer<HttpServerT extends HttpServer<HttpServerT>> {
 
     private static final String TRUE = "true";
     private static final String FALSE = "false";
+
 
     protected Properties props = new Properties();
 

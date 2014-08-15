@@ -16,7 +16,6 @@ public class Poplar {
 
     private static final Logger LOGGER = Logger.getLogger(PoplarBootstrap.class);
 
-
     public static void main(String[] args) {
         LOGGER.info("POPLAR START");
         ApplicationContext context = new AnnotationConfigApplicationContext(Poplar.class);

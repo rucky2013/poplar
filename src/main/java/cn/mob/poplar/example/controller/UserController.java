@@ -4,6 +4,7 @@ import cn.mob.poplar.example.dao.UserDao;
 import cn.mob.poplar.example.model.User;
 import org.springframework.stereotype.Controller;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -12,6 +13,7 @@ import java.util.List;
 @Controller
 public class UserController {
 
+    @Resource
     private UserDao dao;
 
     public void form() {

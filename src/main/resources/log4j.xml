@@ -33,17 +33,8 @@
         </layout>
     </appender>
 
-    <!--
-        <logger name="com.runway.bssp.activeXdemo" additivity="false">
-            <priority value ="info"/>
-            <param name="Level" value="DEBUG"/>
-            <appender-ref ref="activexAppender" />
-        </logger> -->
-
-
-    <!-- 根logger的设置-->
     <root>
-        <priority value="INFO"/>
+        <priority value="debug"/>
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
     </root>
