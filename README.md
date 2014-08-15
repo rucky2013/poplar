@@ -2,8 +2,6 @@ poplar
 ===================================
   基于netty的java中间件<br/>
   
-
-  
 profile
 -----------------------------------
 
@@ -12,52 +10,22 @@ profile
 3.提供restful接口<br/>
 
 ### example
-        import org.springframework.context.ApplicationContext;
-        import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-        import org.springframework.context.annotation.ComponentScan;
-        import org.springframework.context.annotation.Configuration;
-        /**
-         * @version 1.0 date: 2014/8/15
-         * @author: Dempe
-         */
-        @Configuration
-        @ComponentScan
-        public class Poplar {
-            public static void main(String[] args) {
-                ApplicationContext context = new AnnotationConfigApplicationContext(Poplar.class);
-                PoplarBootstrap serverBootstrap = context.getBean(PoplarBootstrap.class);
-                serverBootstrap.startUp();
-            }
+    import org.springframework.context.ApplicationContext;
+    import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+    import org.springframework.context.annotation.ComponentScan;
+    import org.springframework.context.annotation.Configuration;
+    
+    @Configuration
+    @ComponentScan
+    public class Poplar {
+        public static void main(String[] args) {
+            ApplicationContext context = new AnnotationConfigApplicationContext(Poplar.class);
+            PoplarBootstrap serverBootstrap = context.getBean(PoplarBootstrap.class);
+            serverBootstrap.startUp();
         }
+    }
 ### link
-[document:http://dempezheng.github.io/poplar](http://dempezheng.github.io/poplar/)<br />
-
-
-###只是显示图片
-![github](http://github.com/unicorn.png "github")
-
-###想点击某个图片进入一个网页,比如我想点击github的icorn然后再进入www.github.com
-[![image]](http://www.github.com/)
-[image]: http://github.com/github.png "github"
-
-### 文字被些字符包围
-> 文字被些字符包围
->
-> 只要再文字前面加上>空格即可
->
-> 如果你要换行的话,新起一行,输入>空格即可,后面不接文字
-> 但> 只能放在行首才有效
-
-### 文字被些字符包围,多重包围
-> 文字被些字符包围开始
->
-> > 只要再文字前面加上>空格即可
->
->  > > 如果你要换行的话,新起一行,输入>空格即可,后面不接文字
->
-> > > > 但> 只能放在行首才有效
-
-###
+[DOC : http://dempezheng.github.io/poplar](http://dempezheng.github.io/poplar/)<br />
 
 
 
