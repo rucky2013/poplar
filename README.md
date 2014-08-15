@@ -10,16 +10,12 @@ profile
 1.轻量的中间件服务<br/>
 2.基于spring容器的依赖注入<br/>
 3.提供restful接口<br/>
-  中标题一般显示重点项,类似html的\<h2\><br />
-  你只要在标题下面输入------即可
-  
+
 ### example
-        import org.apache.log4j.Logger;
         import org.springframework.context.ApplicationContext;
         import org.springframework.context.annotation.AnnotationConfigApplicationContext;
         import org.springframework.context.annotation.ComponentScan;
         import org.springframework.context.annotation.Configuration;
-        
         /**
          * @version 1.0 date: 2014/8/15
          * @author: Dempe
@@ -27,23 +23,14 @@ profile
         @Configuration
         @ComponentScan
         public class Poplar {
-        
-            private static final Logger LOGGER = Logger.getLogger(PoplarBootstrap.class);
-        
-        
             public static void main(String[] args) {
-                LOGGER.info("POPLAR START");
                 ApplicationContext context = new AnnotationConfigApplicationContext(Poplar.class);
                 PoplarBootstrap serverBootstrap = context.getBean(PoplarBootstrap.class);
                 serverBootstrap.startUp();
-        
             }
-        
         }
-
-
 ### link
-[document:](http://dempezheng.github.io/poplar/)<br />
+[document:http://dempezheng.github.io/poplar](http://dempezheng.github.io/poplar/)<br />
 
 
 ###只是显示图片
