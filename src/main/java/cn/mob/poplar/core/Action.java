@@ -5,5 +5,6 @@ package cn.mob.poplar.core;
  */
 public interface Action {
 
+
     byte[] execute(ActionContext context, byte[] message, Object result);
 }
