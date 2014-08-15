@@ -1,7 +1,8 @@
 package cn.mob.poplar;
 
 /**
- * Created by Administrator on 2014/8/6.
+ * @version 1.0 date: 2014/8/15
+ * @author: Dempe
  */
 public interface R {
     String closeOnJvmShutdown = "closeOnJvmShutdown";

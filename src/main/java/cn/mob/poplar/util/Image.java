@@ -303,7 +303,7 @@ public class Image {
         int nW = w, nH = h;
 
 		/*
-		 * 缩放
+         * 缩放
 		 */
         // 未指定图像高度，根据原图尺寸计算出高度
         if (h == -1) {

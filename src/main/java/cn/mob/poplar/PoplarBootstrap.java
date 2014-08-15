@@ -6,7 +6,8 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by Administrator on 2014/8/6.
+ * @version 1.0 date: 2014/8/15
+ * @author: Dempe
  */
 @Component
 public class PoplarBootstrap {

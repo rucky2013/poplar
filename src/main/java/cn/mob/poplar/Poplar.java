@@ -7,10 +7,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Created by Administrator on 2014/8/13.
+ * @version 1.0 date: 2014/8/15
+ * @author: Dempe
  */
-
-
 @Configuration
 @ComponentScan
 public class Poplar {
@@ -25,5 +24,5 @@ public class Poplar {
         serverBootstrap.startUp();
 
     }
-    
+
 }

@@ -5,7 +5,8 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.Logger;
 
 /**
- * Created by Administrator on 2014/8/15.
+ * @version 1.0 date: 2014/8/15
+ * @author: Dempe
  */
 public class Conf {
     private static final Logger LOGGER = Logger.getLogger(Conf.class);

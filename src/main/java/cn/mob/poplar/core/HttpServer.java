@@ -8,7 +8,6 @@ import org.jboss.netty.channel.*;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 import org.jboss.netty.handler.codec.http.HttpRequestDecoder;
 import org.jboss.netty.handler.codec.http.HttpResponseEncoder;
-import org.springframework.stereotype.Component;
 
 import java.net.InetSocketAddress;
 import java.util.Properties;
@@ -41,7 +40,8 @@ public class HttpServer<HttpServerT extends HttpServer<HttpServerT>> {
     protected HttpServer() {
 
     }
-    public HttpServer (String hostname, int port){
+
+    public HttpServer(String hostname, int port) {
         this.hostname = hostname;
         this.port = port;
     }
@@ -132,8 +132,6 @@ public class HttpServer<HttpServerT extends HttpServer<HttpServerT>> {
             hook = null;
 
         }
-
-
     }
 
     private class ServerPipelineFactory implements ChannelPipelineFactory {
