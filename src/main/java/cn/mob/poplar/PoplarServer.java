@@ -1,7 +1,7 @@
 package cn.mob.poplar;
 
 import cn.mob.poplar.core.HttpServer;
-import cn.mob.poplar.core.RequestRegistry;
+import cn.mob.poplar.core.RequestMapping;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
@@ -18,28 +18,17 @@ public class PoplarServer {
     private static final String DEF_PORT = "8899";
 
     @Resource
-    private RequestRegistry registry;
+    private RequestMapping registry;
 
     public void startUp() {
         String portStr = Conf.getString(R.poplar_port, DEF_PORT);
         int port = Integer.parseInt(portStr);
-
-        registry.init();
 
         HttpServer server = new HttpServer(registry, R.poplar_host, port);
         server.childKeepAlive().childTcpNoDelay().closeOnJvmShutdown().reuserAddress().startup();
 
     }
 
-//    public String getServerName(){
-//        return null;
-//    }
-//    public int getServerPort(){
-//        return 0;
-//    }
-//    public String getServerHost(){
-//        return null;
-//    }
 
 
 }

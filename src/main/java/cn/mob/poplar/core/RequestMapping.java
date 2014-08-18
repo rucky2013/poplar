@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.SmartLifecycle;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
@@ -18,9 +19,9 @@ import java.util.Map;
  * Created by Administrator on 2014/8/13.
  */
 @Component
-public class RequestRegistry implements Registry, ApplicationContextAware {
+public class RequestMapping implements Mapping, ApplicationContextAware, SmartLifecycle {
 
-    private static final Logger LOGGER = Logger.getLogger(RequestRegistry.class);
+    private static final Logger LOGGER = Logger.getLogger(RequestMapping.class);
 
     private final Map<String, CMBean> mapping = new HashMap<String, CMBean>();
 
@@ -74,5 +75,36 @@ public class RequestRegistry implements Registry, ApplicationContextAware {
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
+    }
+
+    @Override
+    public boolean isAutoStartup() {
+        return true;
+    }
+
+    @Override
+    public void stop(Runnable callback) {
+
+    }
+
+    @Override
+    public void start() {
+
+        init();
+    }
+
+    @Override
+    public void stop() {
+
+    }
+
+    @Override
+    public boolean isRunning() {
+        return false;
+    }
+
+    @Override
+    public int getPhase() {
+        return 0;
     }
 }

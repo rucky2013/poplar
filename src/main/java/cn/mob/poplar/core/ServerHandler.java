@@ -10,7 +10,6 @@ import org.jboss.netty.handler.codec.http.HttpResponseStatus;
 import org.jboss.netty.handler.codec.http.QueryStringDecoder;
 
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by Administrator on 2014/8/6.
@@ -19,11 +18,11 @@ public class ServerHandler extends SimpleChannelUpstreamHandler {
 
     private static final Logger LOGGER = Logger.getLogger(ServerHandler.class);
 
-    private Registry registry;
+    private Mapping registry;
     private ExecutorService worker;
 
 
-    public ServerHandler(Registry registry, ExecutorService worker) {
+    public ServerHandler(Mapping registry, ExecutorService worker) {
         this.registry = registry;
         this.worker = worker;
     }

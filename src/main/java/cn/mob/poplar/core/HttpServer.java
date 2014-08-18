@@ -28,7 +28,7 @@ public class HttpServer<HttpServerT extends HttpServer<HttpServerT>> {
 
     protected Properties props = new Properties();
 
-    Registry registry = new RequestRegistry();
+    Mapping registry = new RequestMapping();
 
     ExecutorService worker;
     ExecutorService boss;
@@ -47,7 +47,7 @@ public class HttpServer<HttpServerT extends HttpServer<HttpServerT>> {
         this.port = port;
     }
 
-    public HttpServer(Registry registry, String hostname, int port) {
+    public HttpServer(Mapping registry, String hostname, int port) {
         this.registry = registry;
         this.hostname = hostname;
         this.port = port;
@@ -117,7 +117,7 @@ public class HttpServer<HttpServerT extends HttpServer<HttpServerT>> {
         };
         Thread hook;
 
-        public CloseOnJVMShutdown(Registry registry, String hostname, int port) {
+        public CloseOnJVMShutdown(Mapping registry, String hostname, int port) {
             this.registry = registry;
             this.hostname = hostname;
             this.port = port;
