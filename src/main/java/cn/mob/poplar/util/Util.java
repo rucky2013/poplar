@@ -7,6 +7,7 @@ import javassist.NotFoundException;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.http.HttpRequest;
+import org.jboss.netty.handler.codec.http.HttpResponseStatus;
 import org.jboss.netty.handler.codec.http.QueryStringDecoder;
 
 import java.lang.reflect.InvocationTargetException;
@@ -84,9 +85,13 @@ public class Util {
             Object obj = cmBean.invoke(objects);
             result = new BaseController().execute(obj);
         } catch (InvocationTargetException e1) {
+            ActionWriter.writeError(ctx.getChannel(), HttpResponseStatus.MULTI_STATUS);
             e1.printStackTrace();
+            return;
         } catch (IllegalAccessException e1) {
+            ActionWriter.writeError(ctx.getChannel(), HttpResponseStatus.MULTI_STATUS);
             e1.printStackTrace();
+            return;
         }
 
         ActionWriter.writeResponse(ctx.getChannel(), result);

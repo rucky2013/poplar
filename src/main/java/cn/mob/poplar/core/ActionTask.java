@@ -28,6 +28,5 @@ public class ActionTask implements Runnable {
     @Override
     public void run() {
         Util.execute(ctx, request, decoder, cmBean);
-
     }
 }

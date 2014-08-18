@@ -18,9 +18,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ServerHandler extends SimpleChannelUpstreamHandler {
 
     private static final Logger LOGGER = Logger.getLogger(ServerHandler.class);
+
     private Registry registry;
     private ExecutorService worker;
-    private AtomicInteger counter = new AtomicInteger();
 
 
     public ServerHandler(Registry registry, ExecutorService worker) {
@@ -33,16 +33,20 @@ public class ServerHandler extends SimpleChannelUpstreamHandler {
         String uri = request.getUri();
         QueryStringDecoder decoder = new QueryStringDecoder(uri);
         String path = decoder.getPath();
+
+        LOGGER.debug(String.format("[access] uri : %s, req : %s", request.getUri(), request.getHeaders()));
+
         if ("/favicon.ico".equals(path)) {
             return;
         }
+
         CMBean cmBean = registry.lookup(path);
         if (cmBean == null) {
-            ActionWriter.writeError(ctx.getChannel(), HttpResponseStatus.BAD_REQUEST);
+            ActionWriter.writeError(ctx.getChannel(), HttpResponseStatus.NOT_FOUND);
             LOGGER.warn("[uri not found ] " + StringUtils.substringAfter(path, "/") + " not mapping !");
             return;
         }
-        LOGGER.debug(String.format("[access] uri : %s, req : %s", request.getUri(), request.getHeaders()));
+
 
         if (this.worker != null) {
             ActionTask task = new ActionTask(ctx, request, decoder, cmBean);
@@ -70,7 +74,6 @@ public class ServerHandler extends SimpleChannelUpstreamHandler {
 
     public void channelClosed(ChannelHandlerContext ctx, ChannelStateEvent event) throws Exception {
         super.channelOpen(ctx, event);
-        counter.incrementAndGet();
     }
 
 
