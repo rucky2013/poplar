@@ -1,5 +1,7 @@
 package cn.mob.poplar.core;
 
+import cn.mob.poplar.anno.Get;
+import cn.mob.poplar.anno.Path;
 import cn.mob.poplar.util.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
@@ -8,6 +10,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -39,6 +42,7 @@ public class RequestRegistry implements Registry,ApplicationContextAware{
         while (iterator.hasNext()) {
             String key = iterator.next();
             Object obj = map.get(key);
+
             String pre_uri = obj.getClass().getAnnotation(Controller.class).value();
             if(StringUtils.isBlank(pre_uri)){
                 pre_uri =  obj.getClass().getSimpleName().toLowerCase().replace("controller", "");
@@ -46,7 +50,15 @@ public class RequestRegistry implements Registry,ApplicationContextAware{
             pre_uri = formatURI(pre_uri);
             Method[] methods = obj.getClass().getDeclaredMethods();
             for (Method method : methods) {
-                mapping.put(pre_uri + "/" + method.getName(), new CMBean(obj, method));
+                Get get = method.getAnnotation(Get.class);
+                String uri = "";
+                if(get!=null&&StringUtils.isNotEmpty(get.value())){
+                    uri = get.value();
+                    uri = StringUtils.substringAfter(uri,"/");
+                }else {
+                    uri = method.getName();
+                }
+                mapping.put(pre_uri + "/" +uri, new CMBean(obj, method));
             }
         }
     }

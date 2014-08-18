@@ -66,7 +66,7 @@ public class ServerHandler extends SimpleChannelUpstreamHandler {
                 return;
             }
 
-            Object obj = cmBean.method.invoke(cmBean.action, objs);
+            Object obj = cmBean.invoke(objs);
 
             byte[] result = new BaseController().execute(context, message, obj);
             ActionWriter.writeResponse(ctx.getChannel(), context.getHttpResponse(), result);

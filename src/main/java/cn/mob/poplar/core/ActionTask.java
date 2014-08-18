@@ -30,7 +30,7 @@ public class ActionTask implements Runnable {
     @Override
     public void run() {
         try {
-            Object obj = cmBean.method.invoke(cmBean.action, objs);
+            Object obj = cmBean.invoke(objs);
             byte[] result = new BaseController().execute(context, message, obj);
             ActionWriter.writeResponse(context.getChannel(), context.getHttpResponse(), result);
         } catch (Throwable throwable) {

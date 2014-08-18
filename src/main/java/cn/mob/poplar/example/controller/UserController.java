@@ -1,5 +1,6 @@
 package cn.mob.poplar.example.controller;
 
+import cn.mob.poplar.anno.Get;
 import cn.mob.poplar.example.dao.UserDao;
 import cn.mob.poplar.example.model.User;
 import org.springframework.stereotype.Controller;
@@ -10,17 +11,14 @@ import java.util.List;
 /**
  * Created by Administrator on 2014/8/7.
  */
-@Controller
+@Controller("dempe")
 public class UserController {
 
     @Resource
     private UserDao dao;
 
-    public void form() {
-
-    }
-
-    public String add() {
+    @Get("/hello")
+    public String get() {
         return "hello";
     }
 
