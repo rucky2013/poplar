@@ -1,6 +1,5 @@
 package cn.mob.poplar.core;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -23,6 +22,6 @@ public class CMBean {
     }
 
     public Object invoke(Object[] objs) throws InvocationTargetException, IllegalAccessException {
-        return  method.invoke(action,objs);
+        return method.invoke(action, objs);
     }
 }

@@ -20,31 +20,31 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 
-public class DefaultCacheStore<K,V> implements CacheStore<K,V> {
+public class DefaultCacheStore<K, V> implements CacheStore<K, V> {
 
-	private final ConcurrentMap<K,V> cache = new ConcurrentHashMap<K,V>();
+    private final ConcurrentMap<K, V> cache = new ConcurrentHashMap<K, V>();
 
-	@Override
-	public V fetch(K key, Callable<V> valueProvider) {
-		if (!cache.containsKey(key)){
-			try {
-				V value = valueProvider.call();
-				cache.put(key, value);
-				return value;
-			} catch (Exception e) {
-				throw new CacheException("Error computing the value", e);
-			}
-		}
-		return cache.get(key);
-	}
+    @Override
+    public V fetch(K key, Callable<V> valueProvider) {
+        if (!cache.containsKey(key)) {
+            try {
+                V value = valueProvider.call();
+                cache.put(key, value);
+                return value;
+            } catch (Exception e) {
+                throw new CacheException("Error computing the value", e);
+            }
+        }
+        return cache.get(key);
+    }
 
-	@Override
-	public V write(K key, V value) {
-		return cache.put(key, value);
-	}
+    @Override
+    public V write(K key, V value) {
+        return cache.put(key, value);
+    }
 
-	@Override
-	public V fetch(K key) {
-		return cache.get(key);
-	}
+    @Override
+    public V fetch(K key) {
+        return cache.get(key);
+    }
 }

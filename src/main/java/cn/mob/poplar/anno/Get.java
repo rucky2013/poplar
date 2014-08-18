@@ -1,7 +1,5 @@
 package cn.mob.poplar.anno;
 
-import org.springframework.stereotype.Component;
-
 import java.lang.annotation.*;
 
 /**

@@ -337,8 +337,8 @@ public class Image {
         float nR = (float) w / (float) h;
 
         int nW, nH, x, y;
-		/*
-		 * 裁减
+        /*
+         * 裁减
 		 */
         // 原图太宽，计算当原图与画布同高时，原图的等比宽度
         if (oR > nR) {

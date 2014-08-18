@@ -18,7 +18,8 @@ public class UserController {
     private UserDao dao;
 
     @Get("/hello")
-    public String get() {
+    public String get(String name) {
+        System.out.println(name);
         return "hello";
     }
 

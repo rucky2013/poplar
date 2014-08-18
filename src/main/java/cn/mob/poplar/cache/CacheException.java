@@ -18,9 +18,9 @@ package cn.mob.poplar.cache;
 
 public class CacheException extends RuntimeException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public CacheException(String message, Exception cause) {
-		super(message, cause);
-	}
+    public CacheException(String message, Exception cause) {
+        super(message, cause);
+    }
 }

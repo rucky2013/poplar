@@ -17,7 +17,8 @@ public class ActionWriter {
 
     private static final Logger LOGGER = Logger.getLogger(ActionWriter.class);
 
-    public static void writeResponse(Channel channel, HttpResponse response, byte[] responseMessage) {
+    public static void writeResponse(Channel channel, byte[] responseMessage) {
+        HttpResponse response = new DefaultHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK);
         try {
             if (!channel.isWritable()) {
                 return;

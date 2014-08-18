@@ -14,13 +14,13 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan
 public class Poplar {
 
-    private static final Logger LOGGER = Logger.getLogger(PoplarBootstrap.class);
+    private static final Logger LOGGER = Logger.getLogger(PoplarServer.class);
 
     public static void main(String[] args) {
         LOGGER.info("POPLAR START");
         ApplicationContext context = new AnnotationConfigApplicationContext(Poplar.class);
-        PoplarBootstrap serverBootstrap = context.getBean(PoplarBootstrap.class);
-        serverBootstrap.startUp();
+        PoplarServer server = context.getBean(PoplarServer.class);
+        server.startUp();
 
     }
 

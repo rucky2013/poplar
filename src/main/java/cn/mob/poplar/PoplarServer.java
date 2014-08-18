@@ -12,9 +12,9 @@ import javax.annotation.Resource;
  * @author: Dempe
  */
 @Component
-public class PoplarBootstrap {
+public class PoplarServer {
 
-    private static final Logger LOGGER = Logger.getLogger(PoplarBootstrap.class);
+    private static final Logger LOGGER = Logger.getLogger(PoplarServer.class);
     private static final String DEF_PORT = "8899";
 
     @Resource
@@ -30,6 +30,16 @@ public class PoplarBootstrap {
         server.childKeepAlive().childTcpNoDelay().closeOnJvmShutdown().reuserAddress().startup();
 
     }
+
+//    public String getServerName(){
+//        return null;
+//    }
+//    public int getServerPort(){
+//        return 0;
+//    }
+//    public String getServerHost(){
+//        return null;
+//    }
 
 
 }

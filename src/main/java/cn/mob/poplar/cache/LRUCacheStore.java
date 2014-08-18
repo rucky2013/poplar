@@ -28,41 +28,41 @@ import java.util.concurrent.Callable;
  * @author Paulo Silveira
  */
 //Not registering it because it is already produced by LRUCacheFactory.
-public class LRUCacheStore<K, V> extends LinkedHashMap<K, V> implements CacheStore<K,V> {
-	private static final long serialVersionUID = 1L;
-	private int capacity;
+public class LRUCacheStore<K, V> extends LinkedHashMap<K, V> implements CacheStore<K, V> {
+    private static final long serialVersionUID = 1L;
+    private int capacity;
 
-	public LRUCacheStore(int capacity) {
-		super(capacity, 0.75f, true);
-		this.capacity = capacity;
-	}
+    public LRUCacheStore(int capacity) {
+        super(capacity, 0.75f, true);
+        this.capacity = capacity;
+    }
 
-	@Override
-	protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
-		return size() > capacity;
-	}
+    @Override
+    protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
+        return size() > capacity;
+    }
 
-	@Override
-	public V fetch(K key, Callable<V> valueProvider) {
-		if (!this.containsKey(key)){
-			try {
-				V value = valueProvider.call();
-				put(key, value);
-				return value;
-			} catch (Exception e) {
-				throw new CacheException("Error computing the value", e);
-			}
-		}
-		return get(key);
-	}
+    @Override
+    public V fetch(K key, Callable<V> valueProvider) {
+        if (!this.containsKey(key)) {
+            try {
+                V value = valueProvider.call();
+                put(key, value);
+                return value;
+            } catch (Exception e) {
+                throw new CacheException("Error computing the value", e);
+            }
+        }
+        return get(key);
+    }
 
-	@Override
-	public V write(K key, V value) {
-		return put(key, value);
-	}
+    @Override
+    public V write(K key, V value) {
+        return put(key, value);
+    }
 
-	@Override
-	public V fetch(K key) {
-		return get(key);
-	}
+    @Override
+    public V fetch(K key) {
+        return get(key);
+    }
 }

@@ -43,6 +43,14 @@ public class ActionContext {
         return null;
     }
 
+    public String getMethod() {
+        return request.getMethod().getName();
+    }
+
+    public String getUri() {
+        return request.getUri();
+    }
+
     public HttpResponse getHttpResponse() {
         return response;
     }

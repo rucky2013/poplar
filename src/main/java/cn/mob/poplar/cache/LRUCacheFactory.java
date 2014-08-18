@@ -16,8 +16,7 @@
 package cn.mob.poplar.cache;
 
 
-
 public class LRUCacheFactory {
-	
+
 
 }
