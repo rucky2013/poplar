@@ -10,6 +10,7 @@ import org.springframework.context.SmartLifecycle;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
+import javax.annotation.PostConstruct;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -19,7 +20,7 @@ import java.util.Map;
  * Created by Administrator on 2014/8/13.
  */
 @Component
-public class RequestMapping implements Mapping, ApplicationContextAware, SmartLifecycle {
+public class RequestMapping implements Mapping, ApplicationContextAware{
 
     private static final Logger LOGGER = Logger.getLogger(RequestMapping.class);
 
@@ -35,6 +36,7 @@ public class RequestMapping implements Mapping, ApplicationContextAware, SmartLi
         return mapping.get(uri);
     }
 
+    @PostConstruct
     public void init() {
         Map<String, Object> map = applicationContext.getBeansWithAnnotation(Controller.class);
         Iterator<String> iterator = map.keySet().iterator();
@@ -77,34 +79,5 @@ public class RequestMapping implements Mapping, ApplicationContextAware, SmartLi
         this.applicationContext = applicationContext;
     }
 
-    @Override
-    public boolean isAutoStartup() {
-        return true;
-    }
 
-    @Override
-    public void stop(Runnable callback) {
-
-    }
-
-    @Override
-    public void start() {
-
-        init();
-    }
-
-    @Override
-    public void stop() {
-
-    }
-
-    @Override
-    public boolean isRunning() {
-        return false;
-    }
-
-    @Override
-    public int getPhase() {
-        return 0;
-    }
 }
