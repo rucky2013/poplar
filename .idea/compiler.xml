@@ -24,9 +24,11 @@
         <processorPath useClasspath="true" />
         <module name="analystic-web" />
         <module name="anlystic-web" />
-        <module name="poplar" />
+        <module name="poplar-core" />
+        <module name="poplar-keeper" />
+        <module name="poplar-manager" />
+        <module name="poplar-proxy" />
       </profile>
     </annotationProcessing>
   </component>
 </project>
-
