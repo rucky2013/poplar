@@ -27,20 +27,18 @@ import java.util.Map;
  */
 public class NodeDiscovery {
 
-    //private static final String     PATH = "/discovery/example";
 
     private final static Logger LOGGER = Logger.getLogger(NodeDiscovery.class);
+
     CuratorFramework client = null;
-
     private String path;
-
     Map<String, ServiceProvider<Node>> providers = Maps.newConcurrentMap();
     ServiceDiscovery<Node> serviceDiscovery = null;
-
     List<NodeServer> servers = Lists.newArrayList();
 
     public NodeDiscovery(String path) {
         this.path = path;
+        init();
     }
 
     public void init() {
@@ -68,10 +66,11 @@ public class NodeDiscovery {
     }
 
 
-    public void listRandomNode(String name) throws Exception {
+    public Node randomNode(String name) throws Exception {
         // this shows how to use a ServiceProvider
         // in a real application you'd create the ServiceProvider early for the service(s) you're interested in
 
+        Node node =null;
         ServiceProvider<Node> provider = providers.get(name);
         if (provider == null) {
             provider = serviceDiscovery.serviceProviderBuilder().serviceName(name).providerStrategy(new RandomStrategy<Node>()).build();
@@ -81,15 +80,17 @@ public class NodeDiscovery {
             Thread.sleep(2500); // give the provider time to warm up - in a real application you wouldn't need to do this
         }
 
-        ServiceInstance<Node> node = provider.getInstance();
-        if (node == null) {
+        ServiceInstance<Node> serviceInstance = provider.getInstance();
+        if (serviceInstance == null) {
             System.err.println("No instances named: " + name);
         } else {
+            node = serviceInstance.getPayload();
         }
+        return node;
 
     }
 
-    public void listNodes(ServiceDiscovery<Node> serviceDiscovery) throws Exception {
+    public void listNodes() throws Exception {
         // This shows how to query all the instances in service discovery
 
         try {
@@ -99,6 +100,7 @@ public class NodeDiscovery {
                 Collection<ServiceInstance<Node>> instances = serviceDiscovery.queryForInstances(serviceName);
                 System.out.println(serviceName);
                 for (ServiceInstance<Node> instance : instances) {
+                    System.out.println("node==>"+instance.getPayload());
                 }
             }
         } finally {
@@ -132,7 +134,7 @@ public class NodeDiscovery {
         System.out.println("Removed a random instance of: " + name);
     }
 
-    public void addNode(String name, String host, int port, String desc) throws Exception {
+    public void addNode(String name, String desc) throws Exception {
 
         NodeServer server = new NodeServer(client, path, name, desc.toString());
         servers.add(server);
