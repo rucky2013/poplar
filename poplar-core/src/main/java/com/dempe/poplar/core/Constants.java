@@ -14,4 +14,16 @@ public class Constants {
 
     public final static String DEF_NODE_NAME = "poplar_node";
 
+
+
+    public final static String CLOSE_ON_JVM_SHUTDOWN = "closeOnJvmShutdown";
+    public final static String CHILD_TCP_NO_DELAY = "child.tcpNoDelay";
+    public final static String REUSER_ADDRESS = "reuserAddress";
+    public final static  String CHILD_KEEP_ALIVE = "child.keepAlive";
+
+    public final static String POPLAR_HOST = "127.0.0.1";
+    public final static String POPLAR_PORT = "poplar.port";
+
+    public final static String TRUE = "true";
+
 }

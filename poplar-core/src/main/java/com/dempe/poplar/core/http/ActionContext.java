@@ -1,4 +1,4 @@
-package cn.mob.poplar.core;
+package com.dempe.poplar.core.http;
 
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;

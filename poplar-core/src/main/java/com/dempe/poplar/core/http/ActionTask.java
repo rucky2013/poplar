@@ -1,6 +1,6 @@
-package cn.mob.poplar.core;
+package com.dempe.poplar.core.http;
 
-import cn.mob.poplar.util.Util;
+import com.dempe.poplar.core.utils.Util;
 import org.apache.log4j.Logger;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.http.HttpRequest;
@@ -12,14 +12,12 @@ import org.jboss.netty.handler.codec.http.QueryStringDecoder;
 public class ActionTask implements Runnable {
 
     private static final Logger LOGGER = Logger.getLogger(ActionTask.class);
-    private CMBean cmBean;
     private ChannelHandlerContext ctx;
     private HttpRequest request;
     private QueryStringDecoder decoder;
 
-    public ActionTask(ChannelHandlerContext ctx, HttpRequest request, QueryStringDecoder decoder, CMBean cmBean) {
+    public ActionTask(ChannelHandlerContext ctx, HttpRequest request, QueryStringDecoder decoder) {
         this.ctx = ctx;
-        this.cmBean = cmBean;
         this.decoder = decoder;
         this.request = request;
     }
@@ -27,6 +25,6 @@ public class ActionTask implements Runnable {
 
     @Override
     public void run() {
-        Util.execute(ctx, request, decoder, cmBean);
+       // Util.execute(ctx, request, decoder);
     }
 }
