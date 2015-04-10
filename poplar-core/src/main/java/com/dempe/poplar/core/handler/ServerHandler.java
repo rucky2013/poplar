@@ -1,12 +1,16 @@
 package com.dempe.poplar.core.handler;
 
+import com.dempe.poplar.core.http.ActionTask;
+import com.dempe.poplar.core.http.ActionWriter;
 import org.apache.log4j.Logger;
 import org.jboss.netty.channel.*;
 import org.jboss.netty.handler.codec.frame.TooLongFrameException;
 import org.jboss.netty.handler.codec.http.HttpRequest;
+import org.jboss.netty.handler.codec.http.HttpResponseStatus;
 import org.jboss.netty.handler.codec.http.QueryStringDecoder;
 
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,11 +23,12 @@ public class ServerHandler extends SimpleChannelUpstreamHandler {
 
     private static final Logger LOGGER = Logger.getLogger(ServerHandler.class);
 
-    private ExecutorService worker;
+    /**
+     * TODO 提供配置
+     */
+    private ExecutorService worker = Executors.newFixedThreadPool(8);
 
-    public ServerHandler(ExecutorService worker) {
-
-        this.worker = worker;
+    public ServerHandler() {
     }
 
     public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) {
@@ -37,18 +42,9 @@ public class ServerHandler extends SimpleChannelUpstreamHandler {
         if ("/favicon.ico".equals(path)) {
             return;
         }
+        ActionTask task = new ActionTask(ctx, request, decoder);
+        this.worker.submit(task);
 
-
-//        ActionWriter.writeError(ctx.getChannel(), HttpResponseStatus.NOT_FOUND);
-//        LOGGER.warn("[uri not found ] " + StringUtils.substringAfter(path, "/") + " not mapping !");
-//        return;
-//
-//        if (this.worker != null) {
-//            ActionTask task = new ActionTask(ctx, request, decoder, cmBean);
-//            this.worker.submit(task);
-//            return;
-//        }
-//        Util.execute(ctx, request, decoder, cmBean);
     }
 
 
@@ -56,7 +52,7 @@ public class ServerHandler extends SimpleChannelUpstreamHandler {
         Throwable cause = event.getCause();
         try {
             if (cause instanceof TooLongFrameException) {
-                // ActionWriter.writeError(ctx.getChannel(), HttpResponseStatus.BAD_REQUEST);
+                ActionWriter.writeError(ctx.getChannel(), HttpResponseStatus.BAD_REQUEST);
                 return;
             }
             cause.printStackTrace();

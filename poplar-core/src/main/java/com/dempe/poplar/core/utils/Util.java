@@ -1,5 +1,6 @@
 package com.dempe.poplar.core.utils;
 
+import com.dempe.poplar.core.http.ActionWriter;
 import org.apache.commons.lang.StringUtils;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.ChannelHandlerContext;
@@ -67,6 +68,7 @@ public class Util {
 
     public static void execute(ChannelHandlerContext ctx, HttpRequest request, QueryStringDecoder decoder) {
         String methodType = request.getMethod().getName();
+        System.out.println("methodType===>"+methodType);
         Map<String, List<String>> params = null;
         if ("POST".equals(methodType)) {
             Util.getParameter(request);
@@ -89,7 +91,7 @@ public class Util {
 //            return;
 //        }
 //
-//        ActionWriter.writeResponse(ctx.getChannel(), result);
+        ActionWriter.writeResponse(ctx.getChannel(), "test".getBytes());
 
     }
 

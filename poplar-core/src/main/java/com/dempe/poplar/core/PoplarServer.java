@@ -61,7 +61,7 @@ public class PoplarServer {
             ChannelPipeline pipeline = Channels.pipeline();
             pipeline.addLast("decoder", new HttpRequestDecoder());
             pipeline.addLast("encoder", new HttpResponseEncoder());
-            pipeline.addLast("handler", new ServerHandler(worker));
+            pipeline.addLast("handler", new ServerHandler());
             return pipeline;
         }
     }
