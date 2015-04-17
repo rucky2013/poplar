@@ -13,6 +13,7 @@
         <module>poplar-proxy</module>
         <module>poplar-keeper</module>
         <module>poplar-manager</module>
+        <module>poplar-example</module>
     </modules>
 
     <dependencies>

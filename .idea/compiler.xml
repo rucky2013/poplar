@@ -25,6 +25,7 @@
         <module name="analystic-web" />
         <module name="anlystic-web" />
         <module name="poplar-core" />
+        <module name="poplar-example" />
         <module name="poplar-keeper" />
         <module name="poplar-manager" />
         <module name="poplar-proxy" />

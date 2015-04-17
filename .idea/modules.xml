@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/poplar.iml" filepath="$PROJECT_DIR$/poplar.iml" />
       <module fileurl="file://$PROJECT_DIR$/poplar-core/poplar-core.iml" filepath="$PROJECT_DIR$/poplar-core/poplar-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/poplar-example/poplar-example.iml" filepath="$PROJECT_DIR$/poplar-example/poplar-example.iml" />
       <module fileurl="file://$PROJECT_DIR$/poplar-keeper/poplar-keeper.iml" filepath="$PROJECT_DIR$/poplar-keeper/poplar-keeper.iml" />
       <module fileurl="file://$PROJECT_DIR$/poplar-manager/poplar-manager.iml" filepath="$PROJECT_DIR$/poplar-manager/poplar-manager.iml" />
       <module fileurl="file://$PROJECT_DIR$/poplar-proxy/poplar-proxy.iml" filepath="$PROJECT_DIR$/poplar-proxy/poplar-proxy.iml" />
