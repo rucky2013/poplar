@@ -17,22 +17,15 @@
 
 package com.dempe.poplar.core.support;
 
-import br.com.caelum.vraptor.cache.CacheStore;
-import br.com.caelum.vraptor.core.Converters;
-import br.com.caelum.vraptor.http.EncodingHandler;
-import br.com.caelum.vraptor.http.MutableRequest;
-import br.com.caelum.vraptor.http.ParameterNameProvider;
-import br.com.caelum.vraptor.proxy.Proxifier;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
+import org.jboss.netty.handler.codec.http.HttpRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.lang.reflect.Method;
 import java.util.*;
-import java.util.concurrent.Callable;
 
 /**
  * The default implementation of controller localization rules. It also uses a Path annotation to discover
@@ -40,51 +33,23 @@ import java.util.concurrent.Callable;
  *
  * @author Guilherme Silveira
  */
-@ApplicationScoped
 public class DefaultRouter implements Router {
 
     private static final Logger logger = LoggerFactory.getLogger(DefaultRouter.class);
 
     private final Collection<Route> routes = new PriorityRoutesList();
-    private final Proxifier proxifier;
-    private final TypeFinder finder;
-    private final Converters converters;
-    private final ParameterNameProvider nameProvider;
-    private final Evaluator evaluator;
-    private final CacheStore<Invocation, Route> cache;
-    private final EncodingHandler encodingHandler;
+    //private final Evaluator evaluator;
 
-    private static final Route NULL = new NoStrategy() {
-        @Override
-        public String urlFor(Class<?> type, Method m, Object... params) {
-            throw new RouteNotFoundException("The selected route is invalid for redirection: " + type + "." + m.getName());
-        }
-    };
 
     /**
      * @deprecated CDI eyes only
      */
-    protected DefaultRouter() {
-        this(null, null, null, null, null, null, null);
-    }
 
     @Inject
-    public DefaultRouter(Proxifier proxifier, TypeFinder finder, Converters converters,
-                         ParameterNameProvider nameProvider, Evaluator evaluator, EncodingHandler encodingHandler,
-                         CacheStore<Invocation, Route> cache) {
-        this.proxifier = proxifier;
-        this.finder = finder;
-        this.converters = converters;
-        this.nameProvider = nameProvider;
-        this.evaluator = evaluator;
-        this.encodingHandler = encodingHandler;
-        this.cache = cache;
+    public DefaultRouter() {
+
     }
 
-    @Override
-    public RouteBuilder builderFor(String uri) {
-        return new DefaultRouteBuilder(proxifier, finder, converters, nameProvider, evaluator, uri, encodingHandler);
-    }
 
     /**
      * You can override this method to get notified by all added routes.
@@ -95,7 +60,7 @@ public class DefaultRouter implements Router {
     }
 
     @Override
-    public ControllerMethod parse(String uri, HttpMethod method, MutableRequest request) throws MethodNotAllowedException {
+    public ControllerMethod parse(String uri, HttpMethod method, HttpRequest request) {
         Collection<Route> routesMatchingUriAndMethod = routesMatchingUriAndMethod(uri, method);
 
         Iterator<Route> iterator = routesMatchingUriAndMethod.iterator();
@@ -106,12 +71,11 @@ public class DefaultRouter implements Router {
         return route.controllerMethod(request, uri);
     }
 
+
     private void checkIfThereIsAnotherRoute(String uri, HttpMethod method, Iterator<Route> iterator, Route route) {
         if (iterator.hasNext()) {
             Route otherRoute = iterator.next();
-            checkState(route.getPriority() != otherRoute.getPriority(),
-                    "There are two rules that matches the uri '%s' with method %s: %s, %s with same priority."
-                            + " Consider using @Path priority attribute.", uri, method, route, otherRoute);
+
         }
     }
 
@@ -121,7 +85,7 @@ public class DefaultRouter implements Router {
 
         if (routesMatchingMethod.isEmpty()) {
             EnumSet<HttpMethod> allowed = allowedMethodsFor(uri);
-            throw new MethodNotAllowedException(allowed, method.toString());
+
         }
         return routesMatchingMethod;
     }
@@ -139,24 +103,14 @@ public class DefaultRouter implements Router {
         Collection<Route> routesMatchingURI = FluentIterable.from(routes)
                 .filter(canHandle(uri)).toSet();
 
-        if (routesMatchingURI.isEmpty()) {
-            throw new ControllerNotFoundException();
-        }
+
         return routesMatchingURI;
     }
 
     @Override
     public <T> String urlFor(final Class<T> type, final Method method, Object... params) {
-        final Class<?> rawtype = proxifier.isProxyType(type) ? type.getSuperclass() : type;
-        final Invocation invocation = new Invocation(rawtype, method);
 
-        Route route = cache.fetch(invocation, new Callable<Route>() {
-            @Override
-            public Route call() throws Exception {
-                return FluentIterable.from(routes).filter(canHandle(rawtype, method))
-                        .first().or(NULL);
-            }
-        });
+        Route route = null;
 
         logger.debug("Selected route for {} is {}", method, route);
         String url = route.urlFor(type, method, params);
@@ -167,7 +121,12 @@ public class DefaultRouter implements Router {
 
     @Override
     public List<Route> allRoutes() {
-        return Collections.unmodifiableList(new ArrayList<>(routes));
+        return Collections.unmodifiableList(new ArrayList<Route>(routes));
+    }
+
+    @Override
+    public RouteBuilder builderFor(String uri) {
+        return null;
     }
 
     private Predicate<Route> canHandle(final Class<?> type, final Method method) {
