@@ -142,9 +142,7 @@ public class DefaultRouteBuilder implements RouteBuilder {
             return DefaultRouteBuilder.this;
         }
 
-        private ParametersControl build() {
-            return new DefaultParametersControl(originalUri, parameters, converters, evaluator, encodingHandler);
-        }
+
     }
 
     @Override

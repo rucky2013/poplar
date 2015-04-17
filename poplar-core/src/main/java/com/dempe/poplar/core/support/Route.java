@@ -17,7 +17,6 @@
 
 package com.dempe.poplar.core.support;
 
-import br.com.caelum.vraptor.http.MutableRequest;
 import org.jboss.netty.handler.codec.http.HttpRequest;
 
 import java.lang.reflect.Method;
