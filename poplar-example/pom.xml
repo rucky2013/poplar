@@ -11,12 +11,7 @@
 
     <artifactId>poplar-example</artifactId>
 
-    <dependencies>
-        <dependency>
-            <groupId></groupId>
-            <artifactId>apache-commons</artifactId>
-        </dependency>
-    </dependencies>
+
 
 
 </project>
