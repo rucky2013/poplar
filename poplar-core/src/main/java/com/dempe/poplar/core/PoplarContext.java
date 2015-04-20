@@ -2,6 +2,10 @@ package com.dempe.poplar.core;
 
 import com.dempe.poplar.core.utils.PackageUtils;
 
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Dempe
@@ -11,10 +15,14 @@ import com.dempe.poplar.core.utils.PackageUtils;
  */
 public class PoplarContext {
 
-    public void init(){
+    private final Map<String,Object> map = new ConcurrentHashMap<String,Object>();
+
+    public void init() throws ClassNotFoundException {
         String[] classNames = PackageUtils.findClassesInPackage("*");
         for (String className : classNames) {
+            Object obj = Class.forName(className);
 
+            map.put("",obj);
         }
     }
 }
