@@ -1,7 +1,6 @@
 package com.dempe.poplar.core.example;
 
 
-import javax.enterprise.context.SessionScoped;
 
 
 /**
@@ -12,7 +11,6 @@ import javax.enterprise.context.SessionScoped;
  * To change this template use File | Settings | File Templates.
  */
 @SuppressWarnings("ALL")
-@SessionScoped
 public class DemoService {
 
     public void greet(){

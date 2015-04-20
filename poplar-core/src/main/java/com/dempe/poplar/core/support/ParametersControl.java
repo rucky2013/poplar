@@ -17,16 +17,31 @@
 
 package com.dempe.poplar.core.support;
 
-import java.lang.annotation.*;
+import org.jboss.netty.handler.codec.http.HttpRequest;
 
-/**
- * Controllers are entry points for requests; i.e, requests are handled by VRaptor Controllers.
- *
- * @author Guilherme Silveira
- * @author Fabio Kung
- */
-@Target(ElementType.TYPE)
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Controller {
+public interface ParametersControl {
+
+    /**
+     * wether the uri matches this uri
+     */
+    boolean matches(String uri);
+
+    /**
+     * creates a uri based on those parameter values
+     */
+    String fillUri(Parameter[] paramNames, Object... paramValues);
+
+    /**
+     * Inserts parameters extracted from the uri into the request parameters.
+     */
+    void fillIntoRequest(String uri, HttpRequest request);
+
+    /**
+     * Applies a list of values to
+     *
+     * @param values
+     * @return
+     */
+    String apply(String[] values);
+
 }

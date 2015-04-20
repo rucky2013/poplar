@@ -126,7 +126,7 @@ public class DefaultRouter implements Router {
 
     @Override
     public RouteBuilder builderFor(String uri) {
-        return null;
+        return new DefaultRouteBuilder( uri);
     }
 
     private Predicate<Route> canHandle(final Class<?> type, final Method method) {

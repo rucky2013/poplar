@@ -17,7 +17,8 @@
 
 package com.dempe.poplar.core.support;
 
-import javax.servlet.http.HttpServletRequest;
+import org.jboss.netty.handler.codec.http.HttpRequest;
+
 import java.lang.annotation.Annotation;
 
 public enum HttpMethod {
@@ -34,14 +35,10 @@ public enum HttpMethod {
         return type;
     }
 
-    public static HttpMethod of(HttpServletRequest request) {
-        String methodName = request.getParameter(METHOD_PARAMETER);
-        if (methodName == null) {
-            methodName = request.getMethod();
-        } else if ("GET".equalsIgnoreCase(request.getMethod())) {
-            throw new InvalidInputException("You can't use " + METHOD_PARAMETER +
-                    " parameter on a GET request. Use POST instead.");
-        }
+    public static HttpMethod of(HttpRequest request) {
+
+        String methodName = request.getMethod().getName();
+
         try {
             return valueOf(methodName.toUpperCase());
         } catch (IllegalArgumentException e) {

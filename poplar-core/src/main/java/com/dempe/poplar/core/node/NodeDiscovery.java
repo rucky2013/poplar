@@ -99,6 +99,7 @@ public class NodeDiscovery {
             for (String serviceName : serviceNames) {
                 Collection<ServiceInstance<Node>> instances = serviceDiscovery.queryForInstances(serviceName);
                 System.out.println(serviceName);
+                System.out.println("instances===>"+instances);
                 for (ServiceInstance<Node> instance : instances) {
                     System.out.println("node==>"+instance.getPayload());
                 }
@@ -137,7 +138,7 @@ public class NodeDiscovery {
     public void addNode(String name, String desc) throws Exception {
 
         NodeServer server = new NodeServer(client, path, name, desc.toString());
-        servers.add(server);
+       servers.add(server);
         server.start();
         System.out.println(name + " added");
     }

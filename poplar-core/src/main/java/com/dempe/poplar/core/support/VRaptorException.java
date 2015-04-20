@@ -17,7 +17,6 @@
 
 package com.dempe.poplar.core.support;
 
-import javax.enterprise.inject.Vetoed;
 
 /**
  * The base {@link Exception} type for VRaptor. All VRaptor exceptions must be extends this.

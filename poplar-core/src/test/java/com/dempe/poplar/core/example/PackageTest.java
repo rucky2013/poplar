@@ -1,8 +1,6 @@
 package com.dempe.poplar.core.example;
 
-import org.junit.Test;
 
-import javax.enterprise.inject.spi.CDI;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,10 +16,6 @@ public class PackageTest {
 
 
 
-    @Test
-    public void test2() {
-        CDI.current();
 
-    }
 
 }

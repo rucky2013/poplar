@@ -15,7 +15,6 @@
  */
 package com.dempe.poplar.core.support;
 
-import javax.enterprise.inject.Vetoed;
 
 public class DefaultControllerInstance implements ControllerInstance {
 

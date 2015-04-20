@@ -1,5 +1,6 @@
 package com.dempe.poplar.core;
 
+import com.dempe.poplar.core.support.*;
 import com.dempe.poplar.core.utils.PackageUtils;
 
 import java.util.Map;
@@ -16,13 +17,26 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PoplarContext {
 
     private final Map<String,Object> map = new ConcurrentHashMap<String,Object>();
+    RoutesParser parser = new PathAnnotationRoutesParser(new DefaultRouter());
+    private Router router = new DefaultRouter();
 
     public void init() throws ClassNotFoundException {
-        String[] classNames = PackageUtils.findClassesInPackage("*");
+        String[] classNames = PackageUtils.findClassesInPackage("com.dempe.*");
         for (String className : classNames) {
-            Object obj = Class.forName(className);
+            Class<?> clzz =Class.forName(className);
+            clzz.getAnnotation(Controller.class);
+            if(clzz.isAnnotationPresent(Controller.class)){
+                for (Route route : parser.rulesFor(Class.forName(className))) {
+                    router.add(route);
+                }
+            }
 
-            map.put("",obj);
         }
+    }
+
+
+    public static void main(String[] args) throws ClassNotFoundException {
+        PoplarContext context = new PoplarContext();
+        context.init();
     }
 }

@@ -17,11 +17,9 @@
 
 package com.dempe.poplar.core.support;
 
-import javax.enterprise.inject.Vetoed;
 import java.lang.annotation.Annotation;
 import java.util.Objects;
 
-@Vetoed
 public class DefaultBeanClass implements BeanClass {
 
     private final Class<?> type;

@@ -17,24 +17,15 @@
 
 package com.dempe.poplar.core.support;
 
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.inject.Stereotype;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import java.util.List;
 
 /**
- * Registers a class as a converter.
+ * Extracts all possible routes for this specific controller.
  *
- * @author Guilherme Silveira
+ * @author guilherme silveira
  */
-@RequestScoped
-@Retention(RetentionPolicy.RUNTIME)
-@Stereotype
-public @interface Convert {
+public interface RoutesParser {
 
-    /**
-     * Register this component as the default converter for a type.
-     */
-    Class<?> value();
+	List<Route> rulesFor(Class<?> baseType);
 
 }

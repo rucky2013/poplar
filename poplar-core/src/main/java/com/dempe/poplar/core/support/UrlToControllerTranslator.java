@@ -17,23 +17,18 @@
 
 package com.dempe.poplar.core.support;
 
-import javax.enterprise.context.RequestScoped;
-import java.lang.annotation.*;
+import org.jboss.netty.handler.codec.http.HttpRequest;
 
 /**
- * Notifies vraptor to use this interceptor in the interceptor stack.<br>
- * Interceptors annotated are run in any order, therefore if the sequence is
- * important to your project you can use before and after options.
+ * Translates requests into controller methods.<br>
+ * The basic idea is to analyze the uri to strip it of unwanted data and use the
+ * rest to route for an specific controller.
  *
  * @author Guilherme Silveira
  */
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-@javax.enterprise.inject.Stereotype
-@RequestScoped
-public @interface Intercepts {
-    Class<?>[] before() default {};
+public interface UrlToControllerTranslator {
 
-    Class<?>[] after() default {};
+    ControllerMethod translate(HttpRequest request)
+            throws ControllerNotFoundException, MethodNotAllowedException;
+
 }

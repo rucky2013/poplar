@@ -10,10 +10,14 @@ package com.dempe.poplar.core.node;
 public class DiscoveryNodeTest {
 
     public static void main(String[] args) throws Exception {
-        NodeDiscovery discovery = new NodeDiscovery("/discovery/test");
-        discovery.addNode("a","");
+        NodeDiscovery discovery = new NodeDiscovery("/discovery/test3");
+        discovery.addNode("a3","");
 
-        discovery.addNode("b","testb");
+        discovery.addNode("b3","testb");
+        discovery.listNodes();
+
+        discovery.deleteNode("a3");
+
         discovery.listNodes();
         discovery.destory();
     }

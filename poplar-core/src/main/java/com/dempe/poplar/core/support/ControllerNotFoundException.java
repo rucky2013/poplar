@@ -6,7 +6,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * 	http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,16 +17,14 @@
 
 package com.dempe.poplar.core.support;
 
-import java.lang.annotation.*;
 
 /**
- * Controllers are entry points for requests; i.e, requests are handled by VRaptor Controllers.
+ * Exception thrown when no routes matching URI are found.
  *
- * @author Guilherme Silveira
- * @author Fabio Kung
+ * @author Lucas Cavalcanti
+ * @author Caio Filipini
  */
-@Target(ElementType.TYPE)
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-public @interface Controller {
+public class ControllerNotFoundException extends RuntimeException {
+	private static final long serialVersionUID = 121345908850681707L;
+
 }

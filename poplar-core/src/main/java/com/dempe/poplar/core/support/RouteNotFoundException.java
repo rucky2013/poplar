@@ -17,23 +17,18 @@
 
 package com.dempe.poplar.core.support;
 
-import java.lang.annotation.Annotation;
 
 /**
- * Represents a web accessible Controller class.
+ * A route was not found for the specified parameters.
  * 
- * 
- * @author Guilherme Silveira
- * @author Paulo Silveira
+ * @author guilherme silveira
  */
-public interface BeanClass {
+public class RouteNotFoundException extends VRaptorException {
 
-	Class<?> getType();
+	public RouteNotFoundException(String msg) {
+		super(msg);
+	}
 
-	Annotation[] getAnnotations();
-
-	Package getPackage();
-
-	String getPackageName();
+	private static final long serialVersionUID = 606801838930057251L;
 
 }

@@ -2,6 +2,8 @@ package com.dempe.poplar.core.example;
 
 
 
+import com.dempe.poplar.core.support.Controller;
+
 import javax.inject.Inject;
 
 /**
@@ -11,6 +13,7 @@ import javax.inject.Inject;
  * Time: 21:45
  * To change this template use File | Settings | File Templates.
  */
+@Controller
 public class DemoController {
 
     @Inject

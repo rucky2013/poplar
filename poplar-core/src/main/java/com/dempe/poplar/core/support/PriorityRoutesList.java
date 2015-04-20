@@ -16,7 +16,6 @@
  */
 package com.dempe.poplar.core.support;
 
-import javax.enterprise.inject.Vetoed;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.locks.Lock;
@@ -27,7 +26,6 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  * @author Lucas Cavalcanti
  */
-@Vetoed
 public class PriorityRoutesList implements Collection<Route> {
 
     private final SortedMap<Integer, Set<Route>> map;
