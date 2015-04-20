@@ -1,6 +1,8 @@
 package com.dempe.poplar.core.example;
 
-import com.dempe.poplar.core.anno.Controller;
+
+
+import javax.inject.Inject;
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,6 +11,17 @@ import com.dempe.poplar.core.anno.Controller;
  * Time: 21:45
  * To change this template use File | Settings | File Templates.
  */
-@Controller
 public class DemoController {
+
+    @Inject
+    private DemoService demoService;
+
+    public void greet() {
+        demoService.greet();
+
+    }
+
+    public static void main(String[] args) {
+        new DemoController().greet();
+    }
 }
