@@ -1,5 +1,6 @@
 package com.dempe.poplar.core.http;
 
+import com.dempe.poplar.core.support.ControllerMethod;
 import com.dempe.poplar.core.utils.Util;
 import org.apache.log4j.Logger;
 import org.jboss.netty.channel.ChannelHandlerContext;
@@ -15,16 +16,22 @@ public class ActionTask implements Runnable {
     private ChannelHandlerContext ctx;
     private HttpRequest request;
     private QueryStringDecoder decoder;
+    private ControllerMethod method;
 
-    public ActionTask(ChannelHandlerContext ctx, HttpRequest request, QueryStringDecoder decoder) {
+    public ActionTask(ChannelHandlerContext ctx, HttpRequest request, QueryStringDecoder decoder,ControllerMethod method) {
         this.ctx = ctx;
         this.decoder = decoder;
         this.request = request;
+        this.method = method;
     }
 
 
     @Override
     public void run() {
-       Util.execute(ctx, request, decoder);
+        try {
+            Util.execute(ctx, request, decoder,method);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
     }
 }

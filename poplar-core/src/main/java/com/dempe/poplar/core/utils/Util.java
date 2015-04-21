@@ -1,12 +1,15 @@
 package com.dempe.poplar.core.utils;
 
 import com.dempe.poplar.core.http.ActionWriter;
+import com.dempe.poplar.core.support.ControllerMethod;
 import org.apache.commons.lang.StringUtils;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.http.HttpRequest;
+import org.jboss.netty.handler.codec.http.HttpResponseStatus;
 import org.jboss.netty.handler.codec.http.QueryStringDecoder;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -66,7 +69,7 @@ public class Util {
 
     }
 
-    public static void execute(ChannelHandlerContext ctx, HttpRequest request, QueryStringDecoder decoder) {
+    public static void execute(ChannelHandlerContext ctx, HttpRequest request, QueryStringDecoder decoder,ControllerMethod method) throws InstantiationException {
         String methodType = request.getMethod().getName();
         System.out.println("methodType===>"+methodType);
         Map<String, List<String>> params = null;
@@ -75,23 +78,22 @@ public class Util {
         } else if ("GET".equals(methodType)) {
             params = decoder.getParameters();
         }
-//        Object[] objects = Util.getArgs(cmBean.action.getClass(), cmBean.method.getName(), params);
-//
-//        byte[] result = null;
-//        try {
-//            Object obj = cmBean.invoke(objects);
-//            result = new BaseController().execute(obj);
-//        } catch (InvocationTargetException e1) {
-//            ActionWriter.writeError(ctx.getChannel(), HttpResponseStatus.MULTI_STATUS);
-//            e1.printStackTrace();
-//            return;
-//        } catch (IllegalAccessException e1) {
-//            ActionWriter.writeError(ctx.getChannel(), HttpResponseStatus.MULTI_STATUS);
-//            e1.printStackTrace();
-//            return;
-//        }
-//
-        ActionWriter.writeResponse(ctx.getChannel(), "test".getBytes());
+
+        byte[] result = null;
+        try {
+            result = method.getMethod().invoke(method.getController().getType().newInstance()).toString().getBytes();
+            System.out.println("===result==>"+result);
+        } catch (InvocationTargetException e1) {
+            ActionWriter.writeError(ctx.getChannel(), HttpResponseStatus.MULTI_STATUS);
+            e1.printStackTrace();
+            return;
+        } catch (IllegalAccessException e1) {
+            ActionWriter.writeError(ctx.getChannel(), HttpResponseStatus.MULTI_STATUS);
+            e1.printStackTrace();
+            return;
+        }
+
+        ActionWriter.writeResponse(ctx.getChannel(), result);
 
     }
 

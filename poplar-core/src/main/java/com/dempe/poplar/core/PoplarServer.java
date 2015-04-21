@@ -40,8 +40,10 @@ public class PoplarServer {
 
     private ServerBootstrap bootstrap;
 
+    private  PoplarContext context;
 
-    public void startUp() {
+
+    public void startUp() throws ClassNotFoundException {
         this.boss = Executors.newFixedThreadPool(build.getBossThreadNum());
         this.worker = Executors.newFixedThreadPool(build.getWorkThreadNum());
         bootstrap = new ServerBootstrap(new NioServerSocketChannelFactory(this.boss, this.worker));
@@ -53,6 +55,9 @@ public class PoplarServer {
         channel = bootstrap.bind(new InetSocketAddress(build.getHost(), build.getPort()));
         LOGGER.info("[SERVER START] : " + build.getNodeName() + " start on /" + build.getHost() + ":" + build.getPort());
 
+        context =new PoplarContext();
+        context.initMapper();
+
     }
 
 
@@ -61,7 +66,7 @@ public class PoplarServer {
             ChannelPipeline pipeline = Channels.pipeline();
             pipeline.addLast("decoder", new HttpRequestDecoder());
             pipeline.addLast("encoder", new HttpResponseEncoder());
-            pipeline.addLast("handler", new ServerHandler());
+            pipeline.addLast("handler", new ServerHandler(context));
             return pipeline;
         }
     }

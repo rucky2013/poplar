@@ -12,7 +12,7 @@ import com.dempe.poplar.core.PoplarServer;
  */
 public class ExampleNodeServer {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException {
 
         new PoplarServer(new PoplarBuilder().setHost("127.0.0.1")
                 .setPort(8889)

@@ -1,7 +1,10 @@
 package com.dempe.poplar.core.handler;
 
+import com.dempe.poplar.core.PoplarContext;
 import com.dempe.poplar.core.http.ActionTask;
 import com.dempe.poplar.core.http.ActionWriter;
+import com.dempe.poplar.core.support.Controller;
+import com.dempe.poplar.core.support.ControllerMethod;
 import org.apache.log4j.Logger;
 import org.jboss.netty.channel.*;
 import org.jboss.netty.handler.codec.frame.TooLongFrameException;
@@ -28,7 +31,10 @@ public class ServerHandler extends SimpleChannelUpstreamHandler {
      */
     private ExecutorService worker = Executors.newFixedThreadPool(8);
 
-    public ServerHandler() {
+    private PoplarContext context;
+
+    public ServerHandler(PoplarContext context) {
+        this.context = context;
     }
 
     public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) {
@@ -39,10 +45,14 @@ public class ServerHandler extends SimpleChannelUpstreamHandler {
 
         LOGGER.debug(String.format("[access] uri : %s, req : %s", request.getUri(), request.getHeaders()));
 
+
         if ("/favicon.ico".equals(path)) {
             return;
         }
-        ActionTask task = new ActionTask(ctx, request, decoder);
+
+        ControllerMethod method = context.parse(uri);
+        System.out.println("method===>"+method);
+        ActionTask task = new ActionTask(ctx, request, decoder,method);
         this.worker.submit(task);
 
     }
