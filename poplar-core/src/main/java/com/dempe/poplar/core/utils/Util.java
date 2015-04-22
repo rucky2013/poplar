@@ -81,6 +81,7 @@ public class Util {
 
         byte[] result = null;
         try {
+            method.getMethod().getGenericParameterTypes();
             result = method.getMethod().invoke(method.getController().getType().newInstance()).toString().getBytes();
             System.out.println("===result==>"+result);
         } catch (InvocationTargetException e1) {

@@ -49,7 +49,11 @@ public class DefaultControllerTranslator implements UrlToControllerTranslator {
 
     @Override
     public ControllerMethod translate(HttpRequest request) {
+
         String controllerName = request.getUri();
+        controllerName = "demoController";
+
+        System.out.println("====>"+controllerName);
 
         logger.debug("trying to access {}", controllerName);
 

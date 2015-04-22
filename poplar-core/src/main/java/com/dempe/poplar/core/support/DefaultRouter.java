@@ -63,6 +63,7 @@ public class DefaultRouter implements Router {
     public ControllerMethod parse(String uri, HttpMethod method, HttpRequest request) {
         Collection<Route> routesMatchingUriAndMethod = routesMatchingUriAndMethod(uri, method);
 
+        System.out.println("==="+routesMatchingUriAndMethod);
         Iterator<Route> iterator = routesMatchingUriAndMethod.iterator();
 
         Route route = iterator.next();
@@ -83,6 +84,7 @@ public class DefaultRouter implements Router {
         Collection<Route> routesMatchingMethod = FluentIterable.from(routesMatchingUri(uri))
                 .filter(allow(method)).toSet();
 
+        System.out.println("routesMatchingUri(uri)===>"+routesMatchingUri(uri));
         if (routesMatchingMethod.isEmpty()) {
             EnumSet<HttpMethod> allowed = allowedMethodsFor(uri);
 
@@ -100,6 +102,7 @@ public class DefaultRouter implements Router {
     }
 
     private Collection<Route> routesMatchingUri(String uri) {
+        System.out.println("=========route>"+Arrays.toString(routes.toArray()));
         Collection<Route> routesMatchingURI = FluentIterable.from(routes)
                 .filter(canHandle(uri)).toSet();
 
