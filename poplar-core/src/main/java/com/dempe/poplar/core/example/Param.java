@@ -14,5 +14,5 @@ import java.lang.annotation.*;
 @Documented
 @Inherited
 public @interface Param {
-    public String name() default "lidong";
+    public String name() default "";
 }

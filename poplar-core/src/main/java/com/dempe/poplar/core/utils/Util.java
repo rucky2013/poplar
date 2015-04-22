@@ -2,6 +2,7 @@ package com.dempe.poplar.core.utils;
 
 import com.dempe.poplar.core.http.ActionWriter;
 import com.dempe.poplar.core.support.ControllerMethod;
+import javassist.NotFoundException;
 import org.apache.commons.lang.StringUtils;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.ChannelHandlerContext;
@@ -10,10 +11,7 @@ import org.jboss.netty.handler.codec.http.HttpResponseStatus;
 import org.jboss.netty.handler.codec.http.QueryStringDecoder;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @version 1.0 date: 2014/8/18
@@ -21,20 +19,23 @@ import java.util.Map;
  */
 public class Util {
     public static Object[] getArgs(Class<?> type, String name, Map<String, List<String>> params) {
+        System.out.println("========"+params);
         Object[] objects = null;
-//        try {
-//            String names[] = ClassUtil.getMethodParamNames(type, name);
-//            objects = new Object[names.length];
-//
-//            for (int i = 0; i < names.length; i++) {
-//                String value = getStringParameter(params, names[i]);
-//                objects[i] = value;
-//            }
-//        } catch (NotFoundException e) {
-//
-//        } catch (ClassUtil.MissingLVException e) {
-//
-//        }
+        try {
+            String names[] = ClassUtil.getMethodParamNames(type, name);
+            System.out.println("param===>"+Arrays.toString(names));
+            objects = new Object[names.length];
+
+            for (int i = 0; i < names.length; i++) {
+                String value = getStringParameter(params, names[i]);
+                System.out.println("value==>"+value);
+                objects[i] = value;
+            }
+        } catch (NotFoundException e) {
+
+        } catch (ClassUtil.MissingLVException e) {
+
+        }
 
 
         return objects;
@@ -74,15 +75,18 @@ public class Util {
         System.out.println("methodType===>"+methodType);
         Map<String, List<String>> params = null;
         if ("POST".equals(methodType)) {
-            Util.getParameter(request);
+            //Util.getParameter(request);
         } else if ("GET".equals(methodType)) {
             params = decoder.getParameters();
         }
 
         byte[] result = null;
         try {
+            System.out.println("=====----"+params);
+            Object[] objects = Util.getArgs(method.getController().getType(), method.getMethod().getName(), params);
+            System.out.println("obj [] :"+Arrays.toString(objects));
             method.getMethod().getGenericParameterTypes();
-            result = method.getMethod().invoke(method.getController().getType().newInstance()).toString().getBytes();
+            result = method.getMethod().invoke(method.getController().getType().newInstance(),objects).toString().getBytes();
             System.out.println("===result==>"+result);
         } catch (InvocationTargetException e1) {
             ActionWriter.writeError(ctx.getChannel(), HttpResponseStatus.MULTI_STATUS);

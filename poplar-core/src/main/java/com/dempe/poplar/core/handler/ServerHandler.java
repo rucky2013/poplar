@@ -5,6 +5,8 @@ import com.dempe.poplar.core.http.ActionTask;
 import com.dempe.poplar.core.http.ActionWriter;
 import com.dempe.poplar.core.support.Controller;
 import com.dempe.poplar.core.support.ControllerMethod;
+import com.dempe.poplar.core.support.StringUtils;
+import com.dempe.poplar.core.utils.Util;
 import org.apache.log4j.Logger;
 import org.jboss.netty.channel.*;
 import org.jboss.netty.handler.codec.frame.TooLongFrameException;
@@ -37,7 +39,7 @@ public class ServerHandler extends SimpleChannelUpstreamHandler {
         this.context = context;
     }
 
-    public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) {
+    public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws InstantiationException {
         HttpRequest request = (HttpRequest) e.getMessage();
         String uri = request.getUri();
         QueryStringDecoder decoder = new QueryStringDecoder(uri);
@@ -50,10 +52,13 @@ public class ServerHandler extends SimpleChannelUpstreamHandler {
             return;
         }
 
-        ControllerMethod method = context.parse(uri);
+        ControllerMethod method = context.parse(org.apache.commons.lang.StringUtils.substringBefore(uri,"?"));
         System.out.println("method===>"+method);
-        ActionTask task = new ActionTask(ctx, request, decoder,method);
-        this.worker.submit(task);
+//        ActionTask task = new ActionTask(ctx, request, decoder,method);
+//       new Thread(task).start();
+        //this.worker.submit(task);
+
+        Util.execute(ctx, request, decoder, method);
 
     }
 
