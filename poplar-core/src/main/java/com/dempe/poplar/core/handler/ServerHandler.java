@@ -53,12 +53,9 @@ public class ServerHandler extends SimpleChannelUpstreamHandler {
         }
 
         ControllerMethod method = context.parse(org.apache.commons.lang.StringUtils.substringBefore(uri,"?"));
-        System.out.println("method===>"+method);
-//        ActionTask task = new ActionTask(ctx, request, decoder,method);
-//       new Thread(task).start();
-        //this.worker.submit(task);
+        ActionTask task = new ActionTask(ctx, request, decoder,method);
+        this.worker.submit(task);
 
-        Util.execute(ctx, request, decoder, method);
 
     }
 

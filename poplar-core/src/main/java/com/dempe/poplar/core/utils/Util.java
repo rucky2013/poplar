@@ -19,16 +19,13 @@ import java.util.*;
  */
 public class Util {
     public static Object[] getArgs(Class<?> type, String name, Map<String, List<String>> params) {
-        System.out.println("========"+params);
         Object[] objects = null;
         try {
             String names[] = ClassUtil.getMethodParamNames(type, name);
-            System.out.println("param===>"+Arrays.toString(names));
             objects = new Object[names.length];
 
             for (int i = 0; i < names.length; i++) {
                 String value = getStringParameter(params, names[i]);
-                System.out.println("value==>"+value);
                 objects[i] = value;
             }
         } catch (NotFoundException e) {
@@ -72,22 +69,18 @@ public class Util {
 
     public static void execute(ChannelHandlerContext ctx, HttpRequest request, QueryStringDecoder decoder,ControllerMethod method) throws InstantiationException {
         String methodType = request.getMethod().getName();
-        System.out.println("methodType===>"+methodType);
         Map<String, List<String>> params = null;
         if ("POST".equals(methodType)) {
-            //Util.getParameter(request);
+            Util.getParameter(request);
         } else if ("GET".equals(methodType)) {
             params = decoder.getParameters();
         }
 
         byte[] result = null;
         try {
-            System.out.println("=====----"+params);
             Object[] objects = Util.getArgs(method.getController().getType(), method.getMethod().getName(), params);
-            System.out.println("obj [] :"+Arrays.toString(objects));
             method.getMethod().getGenericParameterTypes();
             result = method.getMethod().invoke(method.getController().getType().newInstance(),objects).toString().getBytes();
-            System.out.println("===result==>"+result);
         } catch (InvocationTargetException e1) {
             ActionWriter.writeError(ctx.getChannel(), HttpResponseStatus.MULTI_STATUS);
             e1.printStackTrace();
