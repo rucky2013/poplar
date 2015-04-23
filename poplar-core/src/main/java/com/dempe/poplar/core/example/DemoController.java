@@ -21,7 +21,7 @@ public class DemoController {
     @Inject
     private DemoService demoService;
 
-    public String greet(@Param(name = "a") String a) {
+    public String greet(@Param(name = "a") String a,@Param Integer b) {
         System.out.println(a);
         //demoService.greet();
         System.out.println(a);

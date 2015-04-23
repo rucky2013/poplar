@@ -1,5 +1,6 @@
 package com.dempe.poplar.core.utils;
 
+import com.dempe.poplar.core.example.Param;
 import com.dempe.poplar.core.http.ActionWriter;
 import com.dempe.poplar.core.support.ControllerMethod;
 import javassist.NotFoundException;
@@ -11,6 +12,8 @@ import org.jboss.netty.handler.codec.http.HttpResponseStatus;
 import org.jboss.netty.handler.codec.http.QueryStringDecoder;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.*;
 
 /**
@@ -18,16 +21,39 @@ import java.util.*;
  * @author: Dempe
  */
 public class Util {
-    public static Object[] getArgs(Class<?> type, String name, Map<String, List<String>> params) {
+    public static Object[] getArgs(Class<?> type, Method method, Map<String, List<String>> params) throws Exception {
         Object[] objects = null;
         try {
-            String names[] = ClassUtil.getMethodParamNames(type, name);
+            String names[] = ClassUtil.getMethodParamNames(type, method.getName());
             objects = new Object[names.length];
+            Class<?>[] clazz = method.getParameterTypes();
+            Parameter parameters[] = method.getParameters();
 
             for (int i = 0; i < names.length; i++) {
-                String value = getStringParameter(params, names[i]);
-                objects[i] = value;
+
+                Parameter parameter = parameters[i];
+                Param param = parameter.getAnnotation(Param.class);
+
+                String name = StringUtils.equals(param.name(),"") ? names[i] : param.name();
+
+                String value = getStringParameter(params, name);
+                System.out.printf("val"+value);
+
+                String typeName = clazz[i].getName();
+                if (typeName.equals("int") || typeName.equals("java.lang.Integer")) {
+                    objects[i] = Integer.parseInt(value);
+                } else if (typeName.equals("long") || typeName.equals("java.lang.Long")) {
+                    objects[i] = Long.parseLong(value);
+                } else if (typeName.equals("java.util.Date")) {
+
+                } else if (typeName.equals("java.lang.String")) {
+                    objects[i] = value;
+                } else {
+
+                    throw new Exception();
+                }
             }
+            System.out.println(Arrays.toString(objects));
         } catch (NotFoundException e) {
 
         } catch (ClassUtil.MissingLVException e) {
@@ -67,7 +93,7 @@ public class Util {
 
     }
 
-    public static void execute(ChannelHandlerContext ctx, HttpRequest request, QueryStringDecoder decoder,ControllerMethod method) throws InstantiationException {
+    public static void execute(ChannelHandlerContext ctx, HttpRequest request, QueryStringDecoder decoder, ControllerMethod method) throws Exception {
         String methodType = request.getMethod().getName();
         Map<String, List<String>> params = null;
         if ("POST".equals(methodType)) {
@@ -75,12 +101,14 @@ public class Util {
         } else if ("GET".equals(methodType)) {
             params = decoder.getParameters();
         }
+        System.out.println("---------");
 
         byte[] result = null;
         try {
-            Object[] objects = Util.getArgs(method.getController().getType(), method.getMethod().getName(), params);
+
+            Object[] objects = Util.getArgs(method.getController().getType(), method.getMethod(), params);
             method.getMethod().getGenericParameterTypes();
-            result = method.getMethod().invoke(method.getController().getType().newInstance(),objects).toString().getBytes();
+            result = method.getMethod().invoke(method.getController().getType().newInstance(), objects).toString().getBytes();
         } catch (InvocationTargetException e1) {
             ActionWriter.writeError(ctx.getChannel(), HttpResponseStatus.MULTI_STATUS);
             e1.printStackTrace();

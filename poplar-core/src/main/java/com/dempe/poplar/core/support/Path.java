@@ -38,6 +38,7 @@ public @interface Path {
      * @return
      */
     String[] value();
+    String name();
 
     /**
      * Used to decide which path will be tested first.

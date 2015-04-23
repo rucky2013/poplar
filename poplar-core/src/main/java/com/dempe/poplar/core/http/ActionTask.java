@@ -7,6 +7,8 @@ import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.http.HttpRequest;
 import org.jboss.netty.handler.codec.http.QueryStringDecoder;
 
+import static com.dempe.poplar.core.utils.Util.execute;
+
 /**
  * Created by Administrator on 2014/8/6.
  */
@@ -25,13 +27,18 @@ public class ActionTask implements Runnable {
         this.method = method;
     }
 
+    /**
+     * TODO 统一的异常处理
+     */
 
     @Override
     public void run() {
+
         try {
-            Util.execute(ctx, request, decoder,method);
-        } catch (InstantiationException e) {
+            execute(ctx, request, decoder, method);
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 }
