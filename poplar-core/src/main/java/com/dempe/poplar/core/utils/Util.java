@@ -106,8 +106,6 @@ public class Util {
         } else if ("GET".equals(methodType)) {
             params = decoder.getParameters();
         }
-        System.out.println("---------");
-
         byte[] result = null;
         try {
 
