@@ -1,7 +1,6 @@
 package com.dempe.poplar.core.http;
 
-import com.dempe.poplar.core.support.ControllerMethod;
-import com.dempe.poplar.core.utils.Util;
+import com.dempe.poplar.common.controller.ControllerMethod;
 import org.apache.log4j.Logger;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.http.HttpRequest;

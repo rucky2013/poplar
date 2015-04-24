@@ -8,12 +8,11 @@ import java.lang.annotation.Target;
 /**
  * Created with IntelliJ IDEA.
  * User: Dempe
- * Date: 2015/4/13
- * Time: 20:05
+ * Date: 2015/4/20
+ * Time: 18:49
  * To change this template use File | Settings | File Templates.
  */
-@Target(ElementType.TYPE)
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Controller {
-    String build();
+public @interface Path {
 }

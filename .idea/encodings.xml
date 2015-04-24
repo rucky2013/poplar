@@ -1,27 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
-    <file url="file://$PROJECT_DIR$/poplar-core/src/main/java/com/dempe/poplar/core/anno/AroundCall.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/poplar-core/src/main/java/com/dempe/poplar/core/anno/Convert.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/poplar-core/src/main/java/com/dempe/poplar/core/anno/Delete.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/poplar-core/src/main/java/com/dempe/poplar/core/anno/Head.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/poplar-core/src/main/java/com/dempe/poplar/core/anno/Head.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/poplar-core/src/main/java/com/dempe/poplar/core/anno/HeaderParam.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/poplar-core/src/main/java/com/dempe/poplar/core/anno/InterceptionException.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/poplar-core/src/main/java/com/dempe/poplar/core/anno/Intercepts.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/poplar-core/src/main/java/com/dempe/poplar/core/anno/Patch.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/poplar-core/src/main/java/com/dempe/poplar/core/anno/Path.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/poplar-core/src/main/java/com/dempe/poplar/core/anno/Post.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/poplar-core/src/main/java/com/dempe/poplar/core/anno/Put.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/poplar-core/src/main/java/com/dempe/poplar/core/anno/Result.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/poplar-core/src/main/java/com/dempe/poplar/core/anno/View.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/poplar-core/src/main/java/com/dempe/poplar/core/anno/View.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/poplar-core/src/main/java/com/dempe/poplar/core/support/BeanClass.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/poplar-common/src/main/java/com/dempe/poplar/common/controller/BeanClass.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/poplar-common/src/main/java/com/dempe/poplar/common/controller/DefaultBeanClass.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/poplar-common/src/main/java/com/dempe/poplar/common/utils/StringUtils.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/poplar-core/src/main/java/com/dempe/poplar/core/support/ControllerNotFoundException.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/poplar-core/src/main/java/com/dempe/poplar/core/support/DefaultBeanClass.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/poplar-core/src/main/java/com/dempe/poplar/core/support/DefaultControllerTranslator.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/poplar-core/src/main/java/com/dempe/poplar/core/support/DefaultParametersControl.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/poplar-core/src/main/java/com/dempe/poplar/core/support/DefaultRouteBuilder.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/poplar-core/src/main/java/com/dempe/poplar/core/support/DefaultRouteBuilder.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/poplar-core/src/main/java/com/dempe/poplar/core/support/FixedMethodStrategy.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/poplar-core/src/main/java/com/dempe/poplar/core/support/MethodNotAllowedException.java" charset="UTF-8" />

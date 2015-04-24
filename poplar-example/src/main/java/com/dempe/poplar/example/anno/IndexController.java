@@ -7,5 +7,12 @@ package com.dempe.poplar.example.anno;
  * Time: 20:06
  * To change this template use File | Settings | File Templates.
  */
+@Controller(build = "2")
 public class IndexController {
+
+    @Path
+    @Test
+    public void index(){
+
+    }
 }

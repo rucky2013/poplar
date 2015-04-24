@@ -1,8 +1,8 @@
 package com.dempe.poplar.core.utils;
 
-import com.dempe.poplar.core.example.Param;
+import com.dempe.poplar.common.anno.Param;
+import com.dempe.poplar.common.controller.ControllerMethod;
 import com.dempe.poplar.core.http.ActionWriter;
-import com.dempe.poplar.core.support.ControllerMethod;
 import javassist.NotFoundException;
 import org.apache.commons.lang.StringUtils;
 import org.jboss.netty.buffer.ChannelBuffer;
@@ -11,9 +11,9 @@ import org.jboss.netty.handler.codec.http.HttpRequest;
 import org.jboss.netty.handler.codec.http.HttpResponseStatus;
 import org.jboss.netty.handler.codec.http.QueryStringDecoder;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
 import java.util.*;
 
 /**
@@ -27,32 +27,42 @@ public class Util {
             String names[] = ClassUtil.getMethodParamNames(type, method.getName());
             objects = new Object[names.length];
             Class<?>[] clazz = method.getParameterTypes();
-            Parameter parameters[] = method.getParameters();
 
-            for (int i = 0; i < names.length; i++) {
 
-                Parameter parameter = parameters[i];
-                Param param = parameter.getAnnotation(Param.class);
+            Annotation[][] parameterAnnotations = method.getParameterAnnotations();
+            Class[] parameterTypes = method.getParameterTypes();
 
-                String name = StringUtils.equals(param.name(),"") ? names[i] : param.name();
+            int i = 0;
+            for (Annotation[] annotations : parameterAnnotations) {
+                Class parameterType = parameterTypes[i];
 
-                String value = getStringParameter(params, name);
-                System.out.printf("val"+value);
+                for (Annotation annotation : annotations) {
+                    if (annotation instanceof Param) {
+                        Param myAnnotation = (Param) annotation;
 
-                String typeName = clazz[i].getName();
-                if (typeName.equals("int") || typeName.equals("java.lang.Integer")) {
-                    objects[i] = Integer.parseInt(value);
-                } else if (typeName.equals("long") || typeName.equals("java.lang.Long")) {
-                    objects[i] = Long.parseLong(value);
-                } else if (typeName.equals("java.util.Date")) {
+                        String name = StringUtils.equals(myAnnotation.name(), "") ? names[i] : myAnnotation.name();
 
-                } else if (typeName.equals("java.lang.String")) {
-                    objects[i] = value;
-                } else {
+                        String value = getStringParameter(params, name);
 
-                    throw new Exception();
+                        String typeName = clazz[i].getName();
+                        if (typeName.equals("int") || typeName.equals("java.lang.Integer")) {
+                            objects[i] = Integer.parseInt(value);
+                        } else if (typeName.equals("long") || typeName.equals("java.lang.Long")) {
+                            objects[i] = Long.parseLong(value);
+                        } else if (typeName.equals("java.util.Date")) {
+
+                        } else if (typeName.equals("java.lang.String")) {
+                            objects[i] = value;
+                        } else {
+
+                            throw new Exception();
+                        }
+                    }
                 }
+                i++;
             }
+
+
             System.out.println(Arrays.toString(objects));
         } catch (NotFoundException e) {
 

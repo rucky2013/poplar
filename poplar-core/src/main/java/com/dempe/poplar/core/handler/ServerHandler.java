@@ -1,12 +1,9 @@
 package com.dempe.poplar.core.handler;
 
+import com.dempe.poplar.common.controller.ControllerMethod;
 import com.dempe.poplar.core.PoplarContext;
 import com.dempe.poplar.core.http.ActionTask;
 import com.dempe.poplar.core.http.ActionWriter;
-import com.dempe.poplar.core.support.Controller;
-import com.dempe.poplar.core.support.ControllerMethod;
-import com.dempe.poplar.core.support.StringUtils;
-import com.dempe.poplar.core.utils.Util;
 import org.apache.log4j.Logger;
 import org.jboss.netty.channel.*;
 import org.jboss.netty.handler.codec.frame.TooLongFrameException;

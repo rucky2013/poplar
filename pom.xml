@@ -14,6 +14,7 @@
         <module>poplar-keeper</module>
         <module>poplar-manager</module>
         <module>poplar-example</module>
+        <module>poplar-common</module>
     </modules>
 
     <dependencies>

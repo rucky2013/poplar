@@ -24,6 +24,7 @@
         <processorPath useClasspath="true" />
         <module name="analystic-web" />
         <module name="anlystic-web" />
+        <module name="poplar-common" />
         <module name="poplar-core" />
         <module name="poplar-example" />
         <module name="poplar-keeper" />

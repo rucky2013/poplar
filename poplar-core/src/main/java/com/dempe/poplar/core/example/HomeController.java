@@ -1,6 +1,7 @@
 package com.dempe.poplar.core.example;
 
-import com.dempe.poplar.core.support.Controller;
+
+import com.dempe.poplar.common.anno.Controller;
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,7 +10,7 @@ import com.dempe.poplar.core.support.Controller;
  * Time: 下午11:43
  * To change this template use File | Settings | File Templates.
  */
-@Controller
+@Controller("home")
 public class HomeController {
 
     public String index(){

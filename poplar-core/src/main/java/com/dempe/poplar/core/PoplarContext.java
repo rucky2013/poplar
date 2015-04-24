@@ -1,16 +1,20 @@
 package com.dempe.poplar.core;
 
-import com.dempe.poplar.core.support.*;
+import com.dempe.poplar.common.anno.*;
+import com.dempe.poplar.common.controller.ControllerMethod;
+import com.dempe.poplar.common.controller.DefaultBeanClass;
+import com.dempe.poplar.common.controller.DefaultControllerMethod;
+import com.dempe.poplar.common.utils.StringUtils;
 import com.dempe.poplar.core.utils.PackageUtils;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import javassist.Modifier;
 import net.vidageek.mirror.dsl.Mirror;
+import org.apache.log4j.Logger;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -28,21 +32,24 @@ import static java.util.Arrays.asList;
  */
 public class PoplarContext {
 
-    private final Map<String,ControllerMethod> mapper = new ConcurrentHashMap<String,ControllerMethod>();
+    private final static Logger LOGGER = Logger.getLogger(PoplarContext.class);
+
+    private final Map<String, ControllerMethod> mapper = new ConcurrentHashMap<String, ControllerMethod>();
 
     public void initMapper() throws ClassNotFoundException {
         String[] classNames = PackageUtils.findClassesInPackage("com.dempe.*");
         for (String className : classNames) {
-            Class<?> clzz =Class.forName(className);
-            clzz.getAnnotation(Controller.class);
-            if(clzz.isAnnotationPresent(Controller.class)){
+            Class<?> clzz = Class.forName(className);
+
+            if (clzz.isAnnotationPresent(Controller.class)) {
                 for (Method javaMethod : clzz.getMethods()) {
+
                     if (isEligible(javaMethod)) {
                         String[] uris = getURIsFor(javaMethod, clzz);
                         for (String uri : uris) {
-                            ControllerMethod method = new DefaultControllerMethod(new DefaultBeanClass(clzz),javaMethod);
-                            System.out.println(uri);
-                            mapper.put(uri,method);
+                            ControllerMethod method = new DefaultControllerMethod(new DefaultBeanClass(clzz), javaMethod);
+                            mapper.put(uri, method);
+                            LOGGER.info("[REGISTER MAPPING] : controller = " + method.getController().getType().getName() + "  uri = " + uri);
                         }
                     }
 
@@ -53,7 +60,7 @@ public class PoplarContext {
         }
     }
 
-    public ControllerMethod parse(String uri){
+    public ControllerMethod parse(String uri) {
         return mapper.get(uri);
     }
 
@@ -71,19 +78,26 @@ public class PoplarContext {
         }
         String[] uris = getUris(javaMethod);
 
-        if(uris.length > 0){
+        if (uris.length > 0) {
             fixURIs(type, uris);
             return uris;
         }
 
-        return new String[] { defaultUriFor(extractControllerNameFrom(type), javaMethod.getName()) };
+        return new String[]{defaultUriFor(extractControllerNameFrom(type), javaMethod.getName())};
     }
+
     protected String extractControllerNameFrom(Class<?> type) {
         String prefix = extractPrefix(type);
         if (isNullOrEmpty(prefix)) {
-            String baseName = StringUtils.lowercaseFirst(type.getSimpleName());
-            if (baseName.endsWith("Controller")) {
-                return "/" + baseName.substring(0, baseName.lastIndexOf("Controller"));
+            String baseName = "";
+            Controller controller = type.getAnnotation(Controller.class);
+            if (!org.apache.commons.lang.StringUtils.equals(controller.value(), "")) {
+                baseName = controller.value();
+            } else {
+                baseName = StringUtils.lowercaseFirst(type.getSimpleName());
+                if (baseName.endsWith("Controller")) {
+                    return "/" + baseName.substring(0, baseName.lastIndexOf("Controller"));
+                }
             }
             return "/" + baseName;
         } else {
@@ -95,7 +109,7 @@ public class PoplarContext {
         return controllerName + "/" + methodName;
     }
 
-    protected String[] getUris(Method javaMethod){
+    protected String[] getUris(Method javaMethod) {
         Annotation method = FluentIterable.from(asList(javaMethod.getAnnotations()))
                 .filter(instanceOfMethodAnnotation())
                 .first().orNull();
@@ -108,6 +122,8 @@ public class PoplarContext {
 
     protected void fixURIs(Class<?> type, String[] uris) {
         String prefix = extractPrefix(type);
+
+
         for (int i = 0; i < uris.length; i++) {
             if (isNullOrEmpty(prefix)) {
                 uris[i] = fixLeadingSlash(uris[i]);
@@ -135,7 +151,7 @@ public class PoplarContext {
 
     private String fixLeadingSlash(String uri) {
         if (!uri.startsWith("/")) {
-            return  "/" + uri;
+            return "/" + uri;
         }
         return uri;
     }
@@ -155,6 +171,6 @@ public class PoplarContext {
     }
 
     private Predicate<Annotation> instanceOfMethodAnnotation() {
-        return or(instanceOf(Get.class), instanceOf(Post.class), instanceOf(Put.class), instanceOf(Delete.class), instanceOf(Options.class), instanceOf(Patch.class));
+        return or(instanceOf(Get.class), instanceOf(Post.class), instanceOf(Put.class), instanceOf(Delete.class));
     }
 }

@@ -1,7 +1,9 @@
 package com.dempe.poplar.core.example;
 
 
-import com.dempe.poplar.core.support.Controller;
+
+import com.dempe.poplar.common.anno.Controller;
+import com.dempe.poplar.common.anno.Param;
 
 import javax.inject.Inject;
 import java.lang.annotation.Annotation;
@@ -15,7 +17,7 @@ import java.lang.reflect.Method;
  * Time: 21:45
  * To change this template use File | Settings | File Templates.
  */
-@Controller
+@Controller(value = "dempe")
 public class DemoController {
 
     @Inject
