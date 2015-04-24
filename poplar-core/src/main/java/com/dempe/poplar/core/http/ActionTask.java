@@ -37,6 +37,8 @@ public class ActionTask implements Runnable {
             execute(ctx, request, decoder, method);
         } catch (Exception e) {
             e.printStackTrace();
+            ActionWriter.writeResponse(ctx.getChannel(), "error".getBytes());
+
         }
 
     }

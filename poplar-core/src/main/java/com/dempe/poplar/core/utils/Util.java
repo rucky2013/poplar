@@ -28,14 +28,9 @@ public class Util {
             objects = new Object[names.length];
             Class<?>[] clazz = method.getParameterTypes();
 
-
             Annotation[][] parameterAnnotations = method.getParameterAnnotations();
-            Class[] parameterTypes = method.getParameterTypes();
-
             int i = 0;
             for (Annotation[] annotations : parameterAnnotations) {
-                Class parameterType = parameterTypes[i];
-
                 for (Annotation annotation : annotations) {
                     if (annotation instanceof Param) {
                         Param myAnnotation = (Param) annotation;
