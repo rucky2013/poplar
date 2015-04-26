@@ -1,8 +1,11 @@
 package com.dempe.poplar.core;
 
 import com.dempe.poplar.common.Constants;
+import com.dempe.poplar.common.zk.ZkClient;
 import com.dempe.poplar.core.handler.ServerHandler;
+import org.apache.curator.framework.CuratorFramework;
 import org.apache.log4j.Logger;
+import org.apache.zookeeper.CreateMode;
 import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelPipeline;
@@ -41,10 +44,10 @@ public class PoplarServer {
 
     private ServerBootstrap bootstrap;
 
-    private  PoplarContext context;
+    private PoplarContext context;
 
 
-    public void startUp() throws ClassNotFoundException {
+    public void startUp() throws Exception {
         this.boss = Executors.newFixedThreadPool(build.getBossThreadNum());
         this.worker = Executors.newFixedThreadPool(build.getWorkThreadNum());
         bootstrap = new ServerBootstrap(new NioServerSocketChannelFactory(this.boss, this.worker));
@@ -53,10 +56,23 @@ public class PoplarServer {
         bootstrap.setOption(Constants.CHILD_TCP_NO_DELAY, false);
         bootstrap.setOption(Constants.REUSER_ADDRESS, false);
 
+        if (build.isRegisterKeeper()) {
+            // 注册zookeeper
+            CuratorFramework client = ZkClient.getClient();
+            client.start();
+            String zkPath = build.buildZKPath();
+            if (client.checkExists().forPath(zkPath) == null) {
+                client.create().creatingParentsIfNeeded().forPath(zkPath, "hello".getBytes());
+            }else {
+                client.setData().forPath(zkPath,"exist".getBytes());
+            }
+
+        }
+
         channel = bootstrap.bind(new InetSocketAddress(build.getHost(), build.getPort()));
         LOGGER.info("[SERVER START] : " + build.getNodeName() + " start on /" + build.getHost() + ":" + build.getPort());
 
-        context =new PoplarContext();
+        context = new PoplarContext();
         context.initMapper();
 
     }
@@ -70,6 +86,21 @@ public class PoplarServer {
             pipeline.addLast("handler", new ServerHandler(context));
             return pipeline;
         }
+    }
+
+    public static void main(String[] args) throws Exception {
+        CuratorFramework client = ZkClient.getClient();
+        client.start();
+        String zkPath = "/test/123/222";
+        //Stat stat = client.checkExists().forPath(zkPath);
+        if(client.checkExists().forPath(zkPath)==null){
+            client.create().creatingParentsIfNeeded().forPath(zkPath,"test".getBytes());
+        }else {
+            client.setData().forPath(zkPath,"change".getBytes());
+        }
+
+        //System.out.println(stat);
+        //client.create().withMode(CreateMode.EPHEMERAL_SEQUENTIAL).forPath("/head/child", new byte[0]);
     }
 
 

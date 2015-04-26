@@ -90,4 +90,8 @@ public class PoplarBuilder {
         this.workThreadNum = workThreadNum;
         return this;
     }
+
+    public String buildZKPath(){
+        return "/"+nodeName+"/"+host + port;
+    }
 }
