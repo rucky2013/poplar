@@ -3,6 +3,8 @@ package com.dempe.poplar.configuration;
 import com.dempe.poplar.common.zk.ZkClient;
 import org.apache.curator.framework.CuratorFramework;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: zhengdaxia
@@ -13,8 +15,12 @@ import org.apache.curator.framework.CuratorFramework;
 public class ZkClientMain {
     public static void main(String[] args) throws Exception {
         CuratorFramework client = ZkClient.getClient();
-
         client.start();
-        client.getChildren().forPath("conf");
+
+        List<String> servers = client.getChildren().watched().forPath("/NodeDemo");
+        for (String server : servers) {
+            System.out.println(server);
+        }
+
     }
 }

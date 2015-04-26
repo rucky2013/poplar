@@ -15,12 +15,26 @@ import org.apache.curator.retry.ExponentialBackoffRetry;
 public class ZkClient {
 
 
+    private static CuratorFramework client;
+
+    private ZkClient() {
+
+    }
+
+
     public static CuratorFramework getClient() {
-        return CuratorFrameworkFactory.builder()
-                .namespace(Constants.NAMESPACE)
-                .retryPolicy(new ExponentialBackoffRetry(1000, Integer.MAX_VALUE))
-                .connectString(Constants.ZK_CONNECT_STR)
-                .build();
+        if (client == null) {
+            synchronized (ZkClient.class) {
+                client = CuratorFrameworkFactory.builder()
+                        .namespace(Constants.NAMESPACE)
+                        .retryPolicy(new ExponentialBackoffRetry(1000, Integer.MAX_VALUE))
+                        .connectString(Constants.ZK_CONNECT_STR)
+                        .build();
+                client.start();
+            }
+
+        }
+        return client;
 
     }
 }
