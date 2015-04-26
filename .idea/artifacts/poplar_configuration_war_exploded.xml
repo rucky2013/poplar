@@ -1,10 +1,10 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="poplar-manager:war exploded">
-    <output-path>$PROJECT_DIR$/poplar-manager/target/poplar-manager</output-path>
+  <artifact type="exploded-war" name="poplar-configuration:war exploded">
+    <output-path>$PROJECT_DIR$/poplar-configuration/target/poplar.configuration</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
-          <element id="module-output" name="poplar-manager" />
+          <element id="module-output" name="poplar-configuration" />
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: org.javassist:javassist:3.18.2-GA" />
@@ -25,9 +25,9 @@
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/poplar-manager/target/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/poplar-configuration/target/MANIFEST.MF" />
       </element>
-      <element id="javaee-facet-resources" facet="poplar-manager/web/Web" />
+      <element id="javaee-facet-resources" facet="poplar-configuration/web/Web" />
     </root>
   </artifact>
 </component>

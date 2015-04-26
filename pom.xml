@@ -15,6 +15,7 @@
         <module>poplar-manager</module>
         <module>poplar-example</module>
         <module>poplar-common</module>
+        <module>poplar-configuration</module>
     </modules>
 
     <dependencies>

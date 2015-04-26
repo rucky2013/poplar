@@ -4,6 +4,7 @@
     <entry_points version="2.0" />
   </component>
   <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/poplar-configuration" />
     <file type="web" url="file://$PROJECT_DIR$/poplar-manager" />
   </component>
   <component name="IdProvider" IDEtalkID="1108E744EED3A5ABF83C303D4091AFCA" />

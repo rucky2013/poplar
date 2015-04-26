@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="poplar-configuration:war">
+    <output-path>$PROJECT_DIR$/poplar-configuration/target</output-path>
+    <root id="archive" name="poplar.configuration.war">
+      <element id="artifact" artifact-name="poplar-configuration:war exploded" />
+    </root>
+  </artifact>
+</component>
