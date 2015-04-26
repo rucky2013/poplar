@@ -11,6 +11,13 @@
 
     <artifactId>poplar-example</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.dempe</groupId>
+            <artifactId>poplar-core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency></dependencies>
+
 
 
 
