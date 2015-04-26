@@ -1,5 +1,7 @@
 package com.dempe.poplar.core;
 
+import com.dempe.poplar.common.Constants;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Dempe

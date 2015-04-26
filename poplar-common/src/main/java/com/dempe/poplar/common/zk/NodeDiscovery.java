@@ -1,4 +1,4 @@
-package com.dempe.poplar.core.node;
+package com.dempe.poplar.common.zk;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;

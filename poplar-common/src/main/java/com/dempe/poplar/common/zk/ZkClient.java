@@ -1,6 +1,6 @@
-package com.dempe.poplar.core.node;
+package com.dempe.poplar.common.zk;
 
-import com.dempe.poplar.core.Constants;
+import com.dempe.poplar.common.Constants;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
@@ -15,7 +15,7 @@ import org.apache.curator.retry.ExponentialBackoffRetry;
 public class ZkClient {
 
 
-    public static CuratorFramework getClient(){
+    public static CuratorFramework getClient() {
         return CuratorFrameworkFactory.builder()
                 .namespace(Constants.NAMESPACE)
                 .retryPolicy(new ExponentialBackoffRetry(1000, Integer.MAX_VALUE))

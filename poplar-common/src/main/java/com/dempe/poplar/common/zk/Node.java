@@ -1,6 +1,6 @@
-package com.dempe.poplar.core.node;
+package com.dempe.poplar.common.zk;
 
-import com.dempe.poplar.core.Constants;
+import com.dempe.poplar.common.Constants;
 import org.apache.log4j.Logger;
 
 /**

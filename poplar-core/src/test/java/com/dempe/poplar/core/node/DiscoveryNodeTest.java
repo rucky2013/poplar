@@ -1,5 +1,7 @@
 package com.dempe.poplar.core.node;
 
+import com.dempe.poplar.common.zk.NodeDiscovery;
+
 /**
  * Created with IntelliJ IDEA.
  * User: zhengdaxia

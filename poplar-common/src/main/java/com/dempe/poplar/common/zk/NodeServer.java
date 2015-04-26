@@ -1,4 +1,4 @@
-package com.dempe.poplar.core.node;
+package com.dempe.poplar.common.zk;
 
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.utils.CloseableUtils;

@@ -1,5 +1,6 @@
 package com.dempe.poplar.core;
 
+import com.dempe.poplar.common.Constants;
 import com.dempe.poplar.core.handler.ServerHandler;
 import org.apache.log4j.Logger;
 import org.jboss.netty.bootstrap.ServerBootstrap;
